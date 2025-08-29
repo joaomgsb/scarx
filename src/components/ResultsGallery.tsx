@@ -16,6 +16,12 @@ const AnimatedStats: React.FC = () => {
     success: 0
   });
 
+  const [animationComplete, setAnimationComplete] = useState({
+    lives: false,
+    years: false,
+    success: false
+  });
+
   useEffect(() => {
     if (!inView) return;
 
@@ -29,11 +35,22 @@ const AnimatedStats: React.FC = () => {
       currentStep++;
       const progress = currentStep / steps;
 
+      const newLives = Math.floor(1200 * progress);
+      const newYears = Math.floor(10 * progress);
+      const newSuccess = Math.floor(98 * progress);
+
       setStats({
-        lives: Math.floor(1200 * progress),
-        years: Math.floor(10 * progress),
-        success: Math.floor(98 * progress)
+        lives: newLives,
+        years: newYears,
+        success: newSuccess
       });
+
+      // Verificar se cada animação terminou
+      setAnimationComplete(prev => ({
+        lives: prev.lives || newLives >= 1200,
+        years: prev.years || newYears >= 10,
+        success: prev.success || newSuccess >= 98
+      }));
 
       if (currentStep >= steps) {
         clearInterval(interval);
@@ -42,6 +59,12 @@ const AnimatedStats: React.FC = () => {
           lives: 1200,
           years: 10,
           success: 98
+        });
+        // Marcar todas as animações como completas
+        setAnimationComplete({
+          lives: true,
+          years: true,
+          success: true
         });
       }
     }, stepDuration);
@@ -68,7 +91,9 @@ const AnimatedStats: React.FC = () => {
 
       <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
         <div className="text-center">
-          <div className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold text-primary mb-1 sm:mb-2">
+          <div className={`text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 transition-colors duration-300 ${
+            animationComplete.lives ? 'text-primary' : 'text-gray-400'
+          }`}>
             {stats.lives}+
           </div>
           <div className="text-xs sm:text-sm text-light-muted">
@@ -77,7 +102,9 @@ const AnimatedStats: React.FC = () => {
         </div>
         
         <div className="text-center">
-          <div className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold text-primary mb-1 sm:mb-2">
+          <div className={`text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 transition-colors duration-300 ${
+            animationComplete.years ? 'text-primary' : 'text-gray-400'
+          }`}>
             {stats.years} anos
           </div>
           <div className="text-xs sm:text-sm text-light-muted">
@@ -86,7 +113,9 @@ const AnimatedStats: React.FC = () => {
         </div>
         
         <div className="text-center">
-          <div className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold text-primary mb-1 sm:mb-2">
+          <div className={`text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 transition-colors duration-300 ${
+            animationComplete.success ? 'text-primary' : 'text-gray-400'
+          }`}>
             {stats.success}%
           </div>
           <div className="text-xs sm:text-sm text-light-muted">

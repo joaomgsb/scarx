@@ -65,28 +65,32 @@ const HeroVideo: React.FC = () => {
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      {/* Conteúdo sobre o vídeo */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="max-w-4xl mx-auto"
-        >
-          {/* Logo e Branding */}
-          <motion.div variants={itemVariants} className="mb-8">
-            <div className="mb-4">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary mb-2">
-                SCARX
-              </h1>
-              <p className="text-xl md:text-2xl text-light font-medium mb-2">
-                PERSONAL TRAINING
-              </p>
-              <p className="text-lg md:text-xl text-primary font-semibold">
-                THE EXECUTIVE FIT LIFESTYLE
-              </p>
-            </div>
-          </motion.div>
+                           {/* Conteúdo sobre o vídeo */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            className="max-w-4xl mx-auto flex flex-col items-center justify-center h-full -mt-20"
+          >
+                      {/* Logo e Branding */}
+            <motion.div variants={itemVariants} className="mb-8">
+             <div>
+                               <div className="flex justify-center">
+                  <img 
+                    src="/images/scarx.png" 
+                    alt="SCARX Logo" 
+                    className="h-20 md:h-32 lg:h-40 object-contain"
+                  />
+                </div>
+                                <p className="text-xl md:text-2xl text-light font-medium -mt-12 mb-2">
+                  PERSONAL TRAINING
+                </p>
+                <p className="text-lg md:text-xl text-primary font-semibold">
+                  THE EXECUTIVE FIT LIFESTYLE
+                </p>
+             </div>
+           </motion.div>
 
           {/* Lista de características */}
           <motion.div variants={itemVariants} className="mb-0">
