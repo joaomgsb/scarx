@@ -28,7 +28,7 @@ import QuizPage from './pages/QuizPage';
 function App() {
   useEffect(() => {
     // Update document title
-    document.title = 'ScarFit | Mudanças de Hábitos';
+    document.title = 'ScarX | Revolucione Sua Rotina';
     
     // Update favicon to use local logo
     const favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement;

@@ -139,30 +139,32 @@ const TransformationJourney: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         )}
         
-        {/* Imagem */}
-        <div className="relative h-48 md:h-56 overflow-hidden flex-shrink-0">
+        {/* Imagem - maior para aparecer mais */}
+        <div className="relative h-52 md:h-56 overflow-hidden flex-shrink-0">
           <img 
             src={card.image} 
             alt={card.imageAlt}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${
+              card.id === 'scarx' ? 'object-top' : 'object-center'
+            }`}
           />
           {/* Overlay sutil */}
           <div className={`absolute inset-0 bg-gradient-to-t ${card.id === 'scarx' ? 'from-primary/20' : 'from-neutral-900/40'} to-transparent`} />
         </div>
         
-        {/* Conteúdo */}
-        <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+        {/* Conteúdo - um pouco menor */}
+        <div className="p-5 md:p-6 flex-1 flex flex-col justify-between">
           <div>
             <div className="text-center mb-4">
-              <h3 className={`text-2xl md:text-3xl font-bold ${card.titleColor} mb-3`}>
+              <h3 className={`text-xl md:text-2xl font-bold ${card.titleColor} mb-3`}>
                 {card.title}
               </h3>
-              <div className={`w-16 h-1 ${card.dividerColor} mx-auto rounded-full`} />
+              <div className={`w-14 h-1 ${card.dividerColor} mx-auto rounded-full`} />
             </div>
             
-            <div className="space-y-3 text-center">
+            <div className="space-y-2 text-center">
               {card.content.map((text, index) => (
-                <p key={index} className={`text-base md:text-lg ${card.textColor} font-medium`}>
+                <p key={index} className={`text-sm md:text-base ${card.textColor} font-medium`}>
                   {text}
                 </p>
               ))}
@@ -170,7 +172,7 @@ const TransformationJourney: React.FC = () => {
           </div>
           
           {/* Ícones representativos */}
-          <div className="flex justify-center items-center gap-4 mt-6">
+          <div className="flex justify-center items-center gap-3 mt-5">
             {card.icons.map((icon, index) => (
               <div key={index} className={`p-2 rounded-full ${card.iconBg} ${card.iconColor}`}>
                 {icon}
@@ -192,14 +194,14 @@ const TransformationJourney: React.FC = () => {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="max-w-7xl mx-auto"
+          className="max-w-6xl mx-auto"
         >
-          {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4 leading-tight">
+          {/* Header - mesmo tamanho do ResultsGallery */}
+          <motion.div variants={itemVariants} className="text-center mb-20">
+            <h2 className="text-primary mb-6">
               95% dos profissionais prescrevem o mesmo plano para corpos diferentes.
             </h2>
-            <p className="text-lg md:text-xl text-light-muted max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-light-muted max-w-3xl mx-auto">
               A escolha é sua: continuar com métodos genéricos ou experimentar a metodologia ScarX.
             </p>
           </motion.div>

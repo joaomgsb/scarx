@@ -65,31 +65,39 @@ const DiscoverPlanCTA: React.FC = () => {
     <section id="discover-plan" className="relative py-8 md:py-12 overflow-hidden" ref={ref}>
       {/* Background Premium Effects */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-dark via-dark-lighter to-dark" />
+        {/* Fundo base consistente com o resto da LP */}
+        <div className="absolute inset-0 bg-dark" />
         
-        {/* Spotlight central */}
+        {/* Gradiente sutil para profundidade */}
+        <div className="absolute inset-0 bg-gradient-to-br from-dark via-dark to-neutral-900/50" />
+        
+        {/* Spotlight central mais sutil */}
         <motion.div 
           variants={glowVariants}
           animate="animate"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-primary/15 via-primary/5 to-transparent rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
         />
         
-        {/* Partículas flutuantes */}
+        {/* Partículas flutuantes mais sutis */}
         <motion.div 
           variants={floatingVariants}
           animate="animate"
-          className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-2xl"
+          className="absolute top-1/4 left-1/4 w-24 h-24 bg-primary/8 rounded-full blur-2xl"
         />
         <motion.div 
           variants={floatingVariants}
           animate="animate"
-          className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-primary/8 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-primary/6 rounded-full blur-3xl"
           style={{ animationDelay: '2s' }}
         />
         
-        {/* Linhas de energia */}
-        <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-        <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+        {/* Linhas de energia mais sutis */}
+        <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+        <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
+        
+        {/* Elementos decorativos adicionais para consistência */}
+        <div className="absolute top-1/6 right-1/6 w-16 h-16 bg-primary/5 rounded-full blur-xl" />
+        <div className="absolute bottom-1/6 left-1/6 w-20 h-20 bg-primary/4 rounded-full blur-2xl" />
       </div>
       
       <div className="container-custom relative z-10">
@@ -119,7 +127,7 @@ const DiscoverPlanCTA: React.FC = () => {
           {/* Main CTA */}
           <motion.div variants={itemVariants} className="text-center">
             <div className="relative max-w-2xl mx-auto">
-              <div className="bg-gradient-to-br from-dark-lighter/95 to-dark/95 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-primary/40 shadow-xl shadow-primary/20">
+              <div className="bg-gradient-to-br from-neutral-800/90 to-neutral-900/90 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-primary/30 shadow-xl shadow-primary/10">
                 <h3 className="text-xl md:text-2xl font-bold mb-4 text-white">
                   Pronto para descobrir seu plano ideal?
                 </h3>

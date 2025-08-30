@@ -30,6 +30,15 @@ const Hero: React.FC = () => {
     },
   };
 
+  const imageVariants = {
+    hidden: { x: 50, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 1, ease: "easeOut", delay: 0.3 },
+    },
+  };
+
   return (
     <section
       id="hero"
@@ -55,12 +64,13 @@ const Hero: React.FC = () => {
       <div className="absolute top-1/4 left-1/4 w-32 md:w-64 h-32 md:h-64 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 w-48 md:w-96 h-48 md:h-96 bg-primary/5 rounded-full blur-3xl" />
       
-      <div className="relative z-10 h-full flex items-center justify-start px-4 md:pl-24 lg:pl-28">
+      <div className="relative z-10 h-full flex items-center px-4 md:px-24 lg:px-28 w-full">
+        {/* Coluna da esquerda - Texto */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="text-left max-w-2xl"
+          className="text-left max-w-2xl flex-1"
         >
           {/* Headline principal */}
           <motion.h1 
@@ -121,6 +131,33 @@ const Hero: React.FC = () => {
               <div className="text-xs sm:text-sm">Taxa de Sucesso</div>
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* Coluna da direita - Foto do João Scar */}
+        <motion.div
+          variants={imageVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="hidden md:flex items-center justify-center flex-1"
+        >
+          <div className="relative">
+            {/* Efeito de brilho atrás da imagem */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl scale-110" />
+            
+            {/* Container da imagem com borda e sombra */}
+            <div className="relative bg-gradient-to-br from-primary/10 to-transparent p-2 rounded-3xl backdrop-blur-sm">
+              <img
+                src="/images/joaoscar.png"
+                alt="João Scar - Especialista em Transformação Corporal"
+                className="w-80 md:w-96 h-96 md:h-[28rem] object-cover rounded-2xl shadow-2xl border border-primary/20"
+              />
+            </div>
+            
+            {/* Badge de credibilidade */}
+            <div className="absolute -bottom-4 -left-4 bg-primary text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+              Especialista
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

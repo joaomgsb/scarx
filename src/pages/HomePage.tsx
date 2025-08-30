@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import HeroVideo from '../components/HeroVideo';
 import TransformationJourney from '../components/TransformationJourney';
-import MethodologyShowcase from '../components/MethodologyShowcase';
+
 import ScarXForWho from '../components/ScarXForWho';
 import ResultsGallery from '../components/ResultsGallery';
 import DiscoverPlanCTA from '../components/DiscoverPlanCTA';
@@ -43,17 +43,9 @@ const HomePage: React.FC = () => {
       <div id="hero-video">
         <HeroVideo />
       </div>
-
-      <div id="methodology">
-        <MethodologyShowcase />
-      </div>
       
       <div id="scarx-for-who">
         <ScarXForWho />
-      </div>
-      
-      <div id="discover-plan">
-        <DiscoverPlanCTA />
       </div>
       
       <div id="pro-plus">
@@ -62,6 +54,10 @@ const HomePage: React.FC = () => {
       
       <div id="exclusive-differentials">
         <ExclusiveDifferentials />
+      </div>
+
+      <div id="discover-plan">
+        <DiscoverPlanCTA />
       </div>
       
       <div id="app-showcase">

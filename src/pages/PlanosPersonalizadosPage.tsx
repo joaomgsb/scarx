@@ -131,7 +131,7 @@ const PlanosPersonalizadosPage: React.FC = () => {
         analisePersonalizada: `Com IMC ${imc.toFixed(1)}, você tem um grande desafio pela frente, mas com o suporte adequado, pode alcançar uma transformação extraordinária. Aos ${idade} anos, já ajudamos centenas de pessoas com perfil similar.`,
         planoRecomendado: 'PRIVATE',
         motivacao: 'Sua jornada de transformação será inspiradora. Estamos aqui para cada passo!',
-        desafios: ['Mudança de hábitos', 'Perda de peso sustentável', 'Ganho de energia'],
+        desafios: ['Revolução na rotina', 'Perda de peso sustentável', 'Ganho de energia'],
         objetivos: ['Perda significativa de peso', 'Melhora da saúde', 'Transformação completa do estilo de vida']
       };
     }
