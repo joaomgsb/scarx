@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Star } from 'lucide-react';
 
 // Componente para as estatísticas com animação lenta
 const AnimatedStats: React.FC = () => {
@@ -78,7 +77,7 @@ const AnimatedStats: React.FC = () => {
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 1, ease: "easeOut" }}
-      className="mt-20 pt-16 border-t border-neutral-800"
+      className="mt-8 pt-8 border-t border-neutral-800"
     >
       <div className="text-center mb-8">
         <h3 className="text-xl md:text-2xl font-bold text-light mb-3">
@@ -136,56 +135,52 @@ const ResultsGallery: React.FC = () => {
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Estado para o segundo carrossel
+  const [secondCarouselTranslate, setSecondCarouselTranslate] = useState(-50);
+  const secondCarouselRef = useRef<HTMLDivElement>(null);
 
   // Array completo com todas as transformações disponíveis
   const transformations = [
     {
       name: "Heitor",
       before: "images/antes/heitorantes.jpeg",
-      after: "images/antes/heitordepois.jpeg",
-      testimonial: "Pensei que seria impossível, mas com o acompanhamento certo consegui transformar meu corpo."
+      after: "images/antes/heitordepois.jpeg"
     },
     {
       name: "Peter Jordan",
       before: "images/peterantes.png",
-      after: "images/peterdepois.png",
-              testimonial: "Nunca pensei que conseguiria mudar tanto em tão pouco tempo! A ScarX me provou que é possível."
+      after: "images/peterdepois.png"
     },
     {
       name: "João Scar",
       before: "images/antes.png",
-      after: "images/depois.jpeg",
-      testimonial: "Nada melhor do que provar que a metodologia funciona do que aplicar ela a mim mesmo"
+      after: "images/depois.jpeg"
     },
     {
       name: "Alvaro",
       before: "images/alvaroantes.jpeg",
-      after: "images/alvarodepois.jpeg",
-      testimonial: "O método do João mudou minha vida. Pela primeira vez consegui um resultado real e duradouro."
+      after: "images/alvarodepois.jpeg"
     },
     {
       name: "Ricardo",
       before: "images/antes/ricardoantes.jpeg",
-      after: "images/antes/ricardodepois.jpeg",
-              testimonial: "A metodologia da ScarX é diferente de tudo que já experimentei. Os resultados são impressionantes!"
+      after: "images/antes/ricardodepois.jpeg"
     },
     {
       name: "Enzo",
       before: "images/antes/felipeantes.jpeg",
-      after: "images/antes/felipedepois.jpeg",
-      testimonial: "O suporte diário e os ajustes constantes fizeram toda diferença na minha evolução."
+      after: "images/antes/felipedepois.jpeg"
     },
     {
       name: "Gabriel Schmit",
       before: "images/antes/antes1.jpeg",
-      after: "images/antes/depois1.jpeg",
-              testimonial: "A metodologia da ScarX mudou completamente minha vida. Os resultados falam por si!"
+      after: "images/antes/depois1.jpeg"
     },
     {
       name: "João Simas",
       before: "images/antes/antes2.png",
-      after: "images/antes/depois2.png",
-      testimonial: "Com dedicação e o suporte certo da equipe, consegui atingir meus objetivos!"
+      after: "images/antes/depois2.png"
     }
   ];
 
@@ -221,6 +216,30 @@ const ResultsGallery: React.FC = () => {
 
     return () => clearInterval(animationId);
   }, [inView, transformations.length]);
+
+  // Animação do segundo carrossel (direção oposta)
+  useEffect(() => {
+    if (!inView) return;
+
+    const speed = 0.02; // porcentagem por frame (direção oposta)
+
+    const animate = () => {
+      setSecondCarouselTranslate(prev => {
+        const newTranslate = prev + speed; // Movimento positivo (esquerda para direita)
+        
+        // Quando chegamos no final (0%), resetamos para -50%
+        if (newTranslate >= 0) {
+          return -50; // Volta para -50% para continuar o loop
+        }
+        
+        return newTranslate;
+      });
+    };
+
+    const animationId = setInterval(animate, 16); // ~60fps
+
+    return () => clearInterval(animationId);
+  }, [inView]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -263,6 +282,12 @@ const ResultsGallery: React.FC = () => {
 
           {/* Infinite Carousel */}
           <motion.div variants={itemVariants} className="relative overflow-hidden">
+            {/* Blur overlay esquerdo */}
+            <div className="absolute left-0 top-0 bottom-0 w-4 sm:w-6 md:w-8 bg-gradient-to-r from-dark via-dark/60 to-transparent z-10 pointer-events-none" />
+            
+            {/* Blur overlay direito */}
+            <div className="absolute right-0 top-0 bottom-0 w-4 sm:w-6 md:w-8 bg-gradient-to-l from-dark via-dark/60 to-transparent z-10 pointer-events-none" />
+            
             <div 
               ref={containerRef}
               className="flex gap-6"
@@ -303,22 +328,63 @@ const ResultsGallery: React.FC = () => {
                     </div>
 
                     {/* Content */}
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-3 text-light">{transformation.name}</h3>
-                      <p className="text-light-muted text-sm leading-relaxed italic">
-                        "{transformation.testimonial}"
-                      </p>
-                      
-                      {/* Rating */}
-                      <div className="flex items-center gap-1 mt-4 text-primary">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-current" />
-                        ))}
-                      </div>
+                    <div className="p-6 text-center">
+                      <h3 className="text-xl font-bold text-light">{transformation.name}</h3>
                     </div>
                   </div>
                 </div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* Linha Conectora Animada */}
+          <motion.div variants={itemVariants} className="relative flex justify-center my-6">
+            <div className="relative w-full max-w-4xl h-px">
+              {/* Linha base */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-700 to-transparent opacity-30"></div>
+              
+              {/* Pulso animado */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary to-transparent opacity-60 animate-pulse-line"></div>
+              
+              {/* Partículas movendo */}
+              <div className="absolute top-0 left-0 w-2 h-px bg-primary rounded-full animate-particle-left"></div>
+              <div className="absolute top-0 right-0 w-2 h-px bg-primary rounded-full animate-particle-right"></div>
+            </div>
+          </motion.div>
+
+          {/* Segundo Carrossel Infinito - Direção Oposta */}
+          <motion.div variants={itemVariants} className="relative overflow-hidden mt-8">
+            {/* Blur overlay esquerdo */}
+            <div className="absolute left-0 top-0 bottom-0 w-4 sm:w-6 md:w-8 bg-gradient-to-r from-dark via-dark/60 to-transparent z-10 pointer-events-none" />
+            
+            {/* Blur overlay direito */}
+            <div className="absolute right-0 top-0 bottom-0 w-4 sm:w-6 md:w-8 bg-gradient-to-l from-dark via-dark/60 to-transparent z-10 pointer-events-none" />
+            
+            <div 
+              ref={secondCarouselRef}
+              className="flex"
+              style={{
+                width: '200%',
+                transform: `translateX(${secondCarouselTranslate}%)`,
+                willChange: 'transform'
+              }}
+            >
+              {/* Primeira instância da imagem */}
+              <div className="flex-shrink-0 w-1/2">
+                <img 
+                  src="images/efeitos/carroussel.jpg" 
+                  alt="Transformações contínuas"
+                  className="w-full h-12 sm:h-16 md:h-20 object-cover object-center"
+                />
+              </div>
+              {/* Segunda instância da imagem para efeito infinito */}
+              <div className="flex-shrink-0 w-1/2">
+                <img 
+                  src="images/efeitos/carroussel.jpg" 
+                  alt="Transformações contínuas"
+                  className="w-full h-12 sm:h-16 md:h-20 object-cover object-center"
+                />
+              </div>
             </div>
           </motion.div>
 
