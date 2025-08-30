@@ -132,7 +132,7 @@ const Hero: React.FC = () => {
             variants={itemVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="flex justify-center lg:justify-start relative"
+            className="hidden lg:flex justify-center lg:justify-start relative"
           >
             {/* Efeito de brilho de fundo */}
             <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-yellow-500/10 to-primary/20 rounded-full blur-3xl opacity-50 animate-pulse"></div>
