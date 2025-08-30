@@ -28,7 +28,7 @@ import QuizPage from './pages/QuizPage';
 function App() {
   useEffect(() => {
     // Update document title
-    document.title = 'ScarX | Revolucione Sua Rotina';
+    document.title = 'ScarX | Revolucione sua rotina';
     
     // Update favicon to use local logo
     const favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
