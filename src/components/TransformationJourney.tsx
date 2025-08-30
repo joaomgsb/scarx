@@ -197,7 +197,7 @@ const TransformationJourney: React.FC = () => {
           className="max-w-6xl mx-auto"
         >
           {/* Header - mesmo tamanho do ResultsGallery */}
-          <motion.div variants={itemVariants} className="text-center mb-20">
+          <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-primary mb-6">
               95% dos profissionais prescrevem o mesmo plano para corpos diferentes.
             </h2>

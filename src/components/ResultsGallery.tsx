@@ -252,7 +252,7 @@ const ResultsGallery: React.FC = () => {
           className="max-w-6xl mx-auto"
         >
           {/* Header */}
-          <motion.div variants={itemVariants} className="text-center mb-20">
+          <motion.div variants={itemVariants} className="text-center mb-12">
             <h2 className="text-primary mb-6">
               Transformações Reais
             </h2>

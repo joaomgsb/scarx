@@ -353,7 +353,7 @@ const ProPlus: React.FC = () => {
                 </p>
                 
                 <a
-                  href="https://wa.me/5541984961012?text=Olá! Quero contratar o Plano PRO+ - Experiência Premium da ScarFit. Estou interessado na experiência exclusiva com Ana Fontes e todos os benefícios premium."
+                  href="https://wa.me/5541984961012?text=Olá! Quero contratar o Plano PRO+ - Experiência Premium da ScarX. Estou interessado na experiência exclusiva com Ana Fontes e todos os benefícios premium."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary inline-flex items-center gap-2 md:gap-3 text-sm md:text-lg px-4 md:px-8 py-2.5 md:py-4"

@@ -71,19 +71,19 @@ const HeroVideo: React.FC = () => {
             variants={containerVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="max-w-4xl mx-auto flex flex-col items-center justify-center h-full -mt-8 md:-mt-20"
+            className="max-w-4xl mx-auto flex flex-col items-center justify-center h-full -mt-8 md:-mt-12"
           >
                       {/* Logo e Branding */}
-                        <motion.div variants={itemVariants} className="mb-4 md:mb-8">
+                        <motion.div variants={itemVariants} className="mb-4 md:mb-4">
              <div>
-                              <div className="flex justify-center mb-1 md:mb-2">
+                              <div className="flex justify-center mb-1 md:mb-1">
                   <img 
                     src="/images/scarx.png" 
                     alt="SCARX Logo" 
-                    className="h-28 md:h-32 lg:h-40 object-contain"
+                    className="h-28 md:h-32 lg:h-36 object-contain"
                   />
                 </div>
-                                <p className="text-lg md:text-2xl text-light font-medium mb-0 md:mb-2">
+                                <p className="text-lg md:text-2xl text-light font-medium mb-0 md:mb-1">
                   PERSONAL TRAINING
                 </p>
                 <p className="text-base md:text-xl text-primary font-semibold">
@@ -93,7 +93,7 @@ const HeroVideo: React.FC = () => {
            </motion.div>
 
           {/* Lista de características */}
-          <motion.div variants={itemVariants} className="mb-0 mt-2 md:mt-8">
+          <motion.div variants={itemVariants} className="mb-0 mt-2 md:mt-3">
             <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 text-light text-xs md:text-base font-medium px-2">
               {features.map((feature, index) => (
                 <React.Fragment key={feature}>

@@ -150,7 +150,7 @@ const Contact: React.FC = () => {
               {/* Footer do Card - sempre no final */}
               <div className="space-y-4 mt-6">
                 <a
-                  href="https://wa.me/5541984961012?text=Olá! Gostaria de iniciar minha Consulta Estratégica com a ScarFit para discutir meus objetivos de transformação."
+                  href="https://wa.me/5541984961012?text=Olá! Gostaria de iniciar minha Consulta Estratégica com a ScarX para discutir meus objetivos de transformação."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative inline-flex items-center gap-2 md:gap-3 bg-gradient-to-r from-primary via-primary-light to-primary text-black font-bold py-4 px-4 md:px-8 rounded-2xl text-sm md:text-lg shadow-2xl hover:shadow-primary/50 transition-all duration-300 transform hover:scale-105 w-full justify-center"

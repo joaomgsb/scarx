@@ -149,7 +149,7 @@ const PremiumPlans: React.FC = () => {
                   {/* CTA */}
                   <div className="mt-auto">
                     <a
-                      href={`https://wa.me/5541984961012?text=Olá! Quero saber mais sobre o plano ${plan.name} da ScarFit.`}
+                      href={`https://wa.me/5541984961012?text=Olá! Quero saber mais sobre o plano ${plan.name} da ScarX.`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`w-full flex items-center justify-center gap-3 py-4 px-6 rounded-xl font-semibold transition-all duration-300 ${

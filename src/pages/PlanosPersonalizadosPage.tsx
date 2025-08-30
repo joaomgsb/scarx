@@ -439,7 +439,7 @@ const PlanosPersonalizadosPage: React.FC = () => {
 
                 <div className="mt-auto">
                   <a
-                  href={`https://wa.me/5541984961012?text=Olá! Quero contratar o plano ${plano.nome} da ScarFit. Acabei de ver meu resultado do IMC e gostaria de iniciar minha transformação.`}
+                  href={`https://wa.me/5541984961012?text=Olá! Quero contratar o plano ${plano.nome} da ScarX. Acabei de ver meu resultado do IMC e gostaria de iniciar minha transformação.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
@@ -478,7 +478,7 @@ const PlanosPersonalizadosPage: React.FC = () => {
             </motion.p>
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://wa.me/5541984961012?text=Olá! Quero saber mais sobre os planos da ScarFit. Vi meu resultado do IMC e estou interessado em começar minha transformação."
+                href="https://wa.me/5541984961012?text=Olá! Quero saber mais sobre os planos da ScarX. Vi meu resultado do IMC e estou interessado em começar minha transformação."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary text-lg flex items-center justify-center gap-2"

@@ -281,7 +281,7 @@ const EstudosPage: React.FC = () => {
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="https://wa.me/5541984961012?text=Olá! Vi os estudos científicos da ScarFit e quero saber mais sobre como vocês aplicam a ciência nos planos personalizados."
+                    href="https://wa.me/5541984961012?text=Olá! Vi os estudos científicos da ScarX e quero saber mais sobre como vocês aplicam a ciência nos planos personalizados."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-primary to-primary-dark text-black font-bold py-4 px-8 rounded-xl text-lg flex items-center justify-center gap-3 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
@@ -473,7 +473,7 @@ const EstudosPage: React.FC = () => {
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="https://wa.me/5541984961012?text=Olá! Vi os estudos científicos da ScarFit e quero saber como vocês aplicam a ciência em planos personalizados."
+                    href="https://wa.me/5541984961012?text=Olá! Vi os estudos científicos da ScarX e quero saber como vocês aplicam a ciência em planos personalizados."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-primary to-primary-dark text-black font-bold py-4 px-8 rounded-xl text-lg flex items-center justify-center gap-3 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"

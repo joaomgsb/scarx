@@ -139,7 +139,7 @@ const ContactSection: React.FC = () => {
                 </p>
 
                 <a
-                  href="https://wa.me/5541984961012?text=Olá! Quero começar minha transformação com a ScarFit. Gostaria de conhecer os planos disponíveis."
+                  href="https://wa.me/5541984961012?text=Olá! Quero começar minha transformação com a ScarX. Gostaria de conhecer os planos disponíveis."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-primary text-dark font-bold py-4 px-6 rounded-xl text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
