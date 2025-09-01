@@ -1,14 +1,67 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-scroll';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
+import Plyr from 'plyr-react';
+import 'plyr-react/plyr.css';
 
 const Hero: React.FC = () => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+  
+  const [showOverlay, setShowOverlay] = useState(true);
+  const [showPlyr, setShowPlyr] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const plyrRef = useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  const handleActivateSound = () => {
+    if (videoRef.current && !showPlyr) {
+      setShowOverlay(false);
+      setShowPlyr(true);
+      
+      // Aguardar o Plyr renderizar e começar do início
+      setTimeout(() => {
+        if (plyrRef.current?.plyr?.media) {
+          const plyrVideo = plyrRef.current.plyr.media;
+          plyrVideo.currentTime = 0; // Sempre começar do início
+          plyrVideo.muted = false;
+          plyrVideo.volume = 1.0;
+          plyrVideo.play();
+        }
+      }, 100);
+    }
+  };
+
+  const plyrOptions = {
+    controls: [
+      'play-large', 
+      'play', 
+      'progress', 
+      'current-time', 
+      'duration', 
+      'mute', 
+      'volume', 
+      'fullscreen'
+    ],
+    autoplay: false,
+    muted: false,
+    loop: { active: true },
+    hideControls: false,
+    clickToPlay: true,
+    keyboard: { focused: true, global: false },
+    tooltips: { controls: true, seek: true },
+    captions: { active: false, language: 'auto', update: false },
+    fullscreen: { enabled: true, fallback: true, iosNative: false },
+    storage: { enabled: true, key: 'plyr' },
+    speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
+    quality: { default: 720, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240] },
+    volume: 1,
+  };
+
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -127,7 +180,7 @@ const Hero: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          {/* Coluna da direita - Imagem */}
+          {/* Coluna da direita - Vídeo com Plyr */}
           <motion.div
             variants={itemVariants}
             initial="hidden"
@@ -135,34 +188,71 @@ const Hero: React.FC = () => {
             className="hidden lg:flex justify-center lg:justify-start relative"
           >
             {/* Efeito de brilho de fundo */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-yellow-500/10 to-primary/20 rounded-full blur-3xl opacity-50 animate-pulse"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-yellow-500/10 to-primary/20 rounded-3xl blur-3xl opacity-50 animate-pulse"></div>
             
-            {/* Container da imagem com efeitos */}
+            {/* Container do vídeo com efeitos */}
             <div className="relative group">
               {/* Anel de brilho animado */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-primary via-yellow-500 to-primary rounded-full opacity-20 group-hover:opacity-40 blur-lg animate-spin-slow transition-opacity duration-500"></div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary via-yellow-500 to-primary rounded-3xl opacity-20 group-hover:opacity-40 blur-lg animate-spin-slow transition-opacity duration-500"></div>
               
-              <motion.img 
-                src="/images/hero.png" 
-                alt="Hero ScarX" 
-                className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl h-auto object-contain transform transition-all duration-500 hover:scale-105 hover:rotate-1 filter hover:brightness-110 hover:contrast-110"
-                whileHover={{ 
-                  scale: 1.05,
-                  rotate: 1,
-                  filter: "brightness(1.1) contrast(1.1) drop-shadow(0 20px 40px rgba(255, 193, 7, 0.3))"
-                }}
-                whileTap={{ scale: 0.98 }}
-                animate={{
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  y: {
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }
-                }}
-              />
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                                  <div className="w-full max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl">
+                  
+                  {/* Vídeo HTML5 nativo - sempre rodando de fundo */}
+                  {!showPlyr && (
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-auto object-cover rounded-2xl"
+                    >
+                      <source src="/videohero.mp4" type="video/mp4" />
+                    </video>
+                  )}
+                  
+                  {/* Plyr - aparece apenas após clique */}
+                  {showPlyr && (
+                    <Plyr
+                      ref={plyrRef}
+                      source={{
+                        type: 'video',
+                        sources: [
+                          {
+                            src: '/videohero.mp4',
+                            type: 'video/mp4',
+                          },
+                        ],
+                      }}
+                      options={plyrOptions}
+                    />
+                  )}
+                  
+                  {/* Overlay customizado */}
+                  {showOverlay && (
+                    <div className="absolute inset-0 bg-black/30 backdrop-blur-[1px] cursor-pointer rounded-2xl z-10"
+                         onClick={handleActivateSound}>
+                      
+                      {/* Botão de Play centralizado */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="bg-white/90 backdrop-blur-sm rounded-full p-4 hover:bg-white transition-all duration-300 hover:scale-110 shadow-2xl">
+                          <Play className="w-8 h-8 text-black ml-1" fill="currentColor" />
+                        </div>
+                      </div>
+                      
+                      {/* Texto "ATIVAR SOM" no canto superior direito */}
+                      <div className="absolute top-4 right-4">
+                        <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-xl">
+                          <span className="text-black font-bold text-sm tracking-wide">
+                            ATIVAR SOM
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
               
               {/* Partículas flutuantes */}
               <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary rounded-full opacity-60 animate-ping"></div>

@@ -129,6 +129,10 @@ const Faq: React.FC = () => {
       answer: "Oferecemos garantia de satisfação. Se você não estiver satisfeito com o protocolo dentro dos primeiros 15 dias, faremos todos os ajustes necessários para adequá-lo às suas necessidades ou devolvemos seu investimento integralmente."
     },
     {
+      question: "Como funciona o reembolso?",
+      answer: "Caso você não esteja satisfeito com nossos serviços, oferecemos reembolso integral em até 7 dias após a solicitação. Basta entrar em contato conosco através do WhatsApp e processaremos sua solicitação de forma rápida e sem burocracia."
+    },
+    {
       question: "Como vocês avaliam meu físico?",
       answer: "Através de um questionário detalhado, fotos em diferentes ângulos (tratadas com total confidencialidade) e uma análise completa da sua rotina, histórico de treinos e alimentação. No plano PRO+, você também tem sessões de videoconferência para avaliações mais precisas."
     },
@@ -167,11 +171,9 @@ const Faq: React.FC = () => {
         >
           <motion.div variants={itemVariants} className="relative">
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-6 py-1.5 mb-4">
-              <HelpCircle className="w-5 h-5 text-primary" />
               <span className="text-primary font-semibold text-sm uppercase tracking-wider">
                 Dúvidas Frequentes
               </span>
-              <Sparkles className="w-5 h-5 text-primary" />
             </div>
             
 
@@ -207,9 +209,7 @@ const Faq: React.FC = () => {
         >
           <div className="glass-effect rounded-3xl p-6 md:p-8 border border-neutral-800 max-w-3xl mx-auto">
               <div className="flex items-center justify-center gap-2 mb-4">
-                <Star className="w-6 h-6 text-primary" />
                 <span className="text-primary font-semibold">Ainda tem dúvidas?</span>
-                <Star className="w-6 h-6 text-primary" />
               </div>
               
               <h3 className="text-3xl font-bold mb-3 text-light">Fale Diretamente Conosco</h3>
@@ -224,9 +224,7 @@ const Faq: React.FC = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-primary text-dark font-bold py-4 px-8 rounded-xl text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
               >
-                <HelpCircle className="w-6 h-6" />
                 Converse Conosco: Sua Jornada Começa Aqui
-                <Sparkles className="w-6 h-6" />
               </a>
             </div>
           </motion.div>

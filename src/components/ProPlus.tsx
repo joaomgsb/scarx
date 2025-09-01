@@ -129,7 +129,7 @@ const ProPlus: React.FC = () => {
               Aqui sua mudança acontece com quem trata isso como prioridade.
             </h2>
             
-            <p className="text-lg md:text-xl text-light-muted max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-light max-w-3xl mx-auto leading-relaxed">
               Sua transformação merece um padrão de elite, com atenção total em cada etapa.
             </p>
           </motion.div>

@@ -275,7 +275,7 @@ const ResultsGallery: React.FC = () => {
             <h2 className="text-primary mb-6">
               Transformações Reais
             </h2>
-            <p className="text-xl text-light-muted max-w-3xl mx-auto">
+            <p className="text-xl text-light max-w-3xl mx-auto">
               Resultados que falam por si. Cada transformação é uma história de superação e dedicação.
             </p>
           </motion.div>

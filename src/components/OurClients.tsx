@@ -143,7 +143,7 @@ const OurClients: React.FC = () => {
               Quem confiou em nós?
             </h2>
             
-            <p className="text-light-muted text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto">
+            <p className="text-light text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto">
               Empresários, influenciadores e pessoas de sucesso que confiaram em nossa metodologia
             </p>
           </motion.div>

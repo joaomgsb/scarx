@@ -1,7 +1,14 @@
 import OpenAI from 'openai';
 
+// Verificar se a chave da API está definida
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+if (!apiKey) {
+  console.warn('⚠️ VITE_OPENAI_API_KEY não está definida. A análise de IA não funcionará corretamente.');
+}
+
 const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  apiKey: apiKey,
   dangerouslyAllowBrowser: true
 });
 
@@ -34,6 +41,18 @@ interface AnaliseIA {
 
 export async function analisarPerfilCompleto(dados: DadosUsuario): Promise<AnaliseIA> {
   try {
+    // Verificar se a API key está disponível
+    if (!apiKey) {
+      throw new Error('Chave da API OpenAI não configurada');
+    }
+
+    console.log('🤖 Iniciando análise com OpenAI...', { 
+      peso: dados.peso, 
+      altura: dados.altura, 
+      imc: dados.imc.toFixed(1),
+      categoria: dados.categoria 
+    });
+
     const prompt = `
 Você é um especialista em fitness e nutrição da ScarFit. Analise o perfil completo abaixo e forneça uma análise ESPECÍFICA, TÉCNICA e PERSONALIZADA baseada nos dados reais fornecidos.
 
@@ -49,16 +68,16 @@ ${dados.nivelExperiencia ? `- Nível de experiência: ${dados.nivelExperiencia}`
 ${dados.objetivo ? `- Objetivo principal: ${dados.objetivo}` : ''}
 
 PLANOS DISPONÍVEIS:
-- XPRO: Execução sob medida, com eficiência
-- XELITE: Prioridade e gerente de relacionamento  
-- XPRIVATE: Direto com o fundador, discrição e disponibilidade ampliadas
+- ESSENTIAL: Isca de entrada - 3 meses (R$ 469) - Para testar o método com baixa fricção
+- LEGACY: Melhor custo-benefício - 10 meses (R$ 1.350) - Acompanhamento contínuo sem ruído
+- PRIVATE: Experiência completa - 12 meses (R$ 3.290) - Acesso direto e decisões rápidas
 
 REGRAS PARA RECOMENDAÇÃO:
-- IMC abaixo de 18.5 (Abaixo do peso): Recomendar XELITE ou XPRIVATE
-- IMC 18.5-24.9 (Peso normal): Recomendar XPRO ou XELITE
-- IMC 25-29.9 (Sobrepeso): Recomendar XELITE
-- IMC 30-34.9 (Obesidade Grau 1): Recomendar XELITE ou XPRIVATE
-- IMC 35+ (Obesidade Grau 2/3): Recomendar XPRIVATE
+- IMC abaixo de 18.5 (Abaixo do peso): Recomendar LEGACY ou PRIVATE (precisa acompanhamento mais próximo)
+- IMC 18.5-24.9 (Peso normal): Recomendar ESSENTIAL ou LEGACY (manutenção ou definição)
+- IMC 25-29.9 (Sobrepeso): Recomendar LEGACY (melhor custo-benefício para transformação)
+- IMC 30-34.9 (Obesidade Grau 1): Recomendar LEGACY ou PRIVATE (transformação significativa)
+- IMC 35+ (Obesidade Grau 2/3): Recomendar PRIVATE (acompanhamento intensivo necessário)
 
 CONSIDERE TAMBÉM:
 - Nível de atividade física atual
@@ -78,7 +97,7 @@ INSTRUÇÕES CRÍTICAS:
 Responda APENAS em formato JSON válido:
 {
   "analisePersonalizada": "análise técnica específica de 3-4 frases usando dados exatos e explicando impactos fisiológicos",
-  "planoRecomendado": "XPRO, XELITE ou XPRIVATE",
+  "planoRecomendado": "ESSENTIAL, LEGACY ou PRIVATE",
   "motivacao": "insight motivador baseado no perfil específico, não genérico",
   "desafios": ["desafio específico baseado na idade/IMC", "desafio baseado na frequência de treino", "desafio metabólico específico"],
   "objetivos": ["objetivo específico para o IMC atual", "objetivo baseado na idade/experiência", "objetivo de composição corporal específico"]
@@ -107,6 +126,8 @@ Responda APENAS em formato JSON válido:
       throw new Error('Resposta vazia da OpenAI');
     }
 
+    console.log('✅ Resposta recebida da OpenAI:', resposta.substring(0, 100) + '...');
+
     // Limpar a resposta removendo markdown se houver
     const respostaLimpa = resposta.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
     
@@ -118,15 +139,31 @@ Responda APENAS em formato JSON válido:
         throw new Error('Resposta incompleta da IA');
       }
       
+      console.log('🎯 Análise processada com sucesso:', {
+        planoRecomendado: analise.planoRecomendado,
+        temAnalise: !!analise.analisePersonalizada,
+        temMotivacao: !!analise.motivacao
+      });
+      
       return analise;
     } catch (parseError) {
-      console.error('Erro ao fazer parse da resposta:', parseError);
+      console.error('❌ Erro ao fazer parse da resposta:', parseError);
       console.error('Resposta recebida:', respostaLimpa);
       throw new Error('Resposta da IA não está em formato JSON válido');
     }
 
   } catch (error) {
-    console.error('Erro na análise com OpenAI:', error);
+    console.error('❌ Erro na análise com OpenAI:', error);
+    
+    // Se o erro for relacionado à API key ou configuração
+    if (error instanceof Error) {
+      if (error.message.includes('API key') || error.message.includes('401')) {
+        console.error('🔑 Problema com a chave da API OpenAI');
+      } else if (error.message.includes('network') || error.message.includes('fetch')) {
+        console.error('🌐 Problema de conexão com a API OpenAI');
+      }
+    }
+    
     throw error;
   }
 }

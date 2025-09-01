@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Sparkles, Loader2, CheckCircle, Brain, Shield, Star, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Sparkles, Loader2, CheckCircle, Brain, Shield, Star, ArrowRight, ChevronLeft, ChevronRight, Crown, Zap, Users } from 'lucide-react';
 import Lottie from "lottie-react";
 import etapa1Animation from '../animations/etapa1.json';
 import etapa2Animation from '../animations/etapa2.json';
@@ -484,7 +484,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       // Fallback result
       const fallbackResult = {
         analisePersonalizada: 'Com base nas suas respostas, identificamos que você tem um perfil único que se beneficiaria muito da metodologia ScarX personalizada.',
-        planoRecomendado: 'XELITE',
+        planoRecomendado: 'LEGACY',
         motivacao: 'Sua jornada de transformação está apenas começando. A ScarX tem tudo que você precisa para alcançar seus objetivos!',
         desafios: ['Manter a consistência', 'Adaptar à nova rotina', 'Superar plateaus'],
         objetivos: ['Transformação corporal', 'Melhora da saúde', 'Aumento da autoestima'],
@@ -839,6 +839,114 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
 
   const FinalResultScreen: React.FC<{ result: AnaliseIA }> = ({ result }) => {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
+    const [currentPlanIndex, setCurrentPlanIndex] = useState(0);
+    
+    // Planos disponíveis
+    const plans = [
+      {
+        id: 'ESSENTIAL',
+        name: 'ESSENTIAL',
+        subtitle: 'Isca de entrada - 3 meses',
+        duration: '3 meses',
+        icon: <Zap className="w-8 h-8" />,
+        color: 'from-blue-500 to-blue-600',
+        price: {
+          full: 'R$ 469',
+          description: 'à vista R$469 (R$175 matrícula + R$294 plano 3 meses)',
+          installments: 'até 3x sem juros • 12x com juros no gateway'
+        },
+        target: 'Para quem quer testar o método com baixa fricção',
+        features: [
+          'ScarX App (My PT Hub) com treino, nutri e habit tracker',
+          'Entrega do plano: até 7 dias úteis após questionários',
+          'Atendimento via App (SLA até 24h úteis)',
+          'ScarX Sync mensal: check-in guiado para ajustes'
+        ],
+        addons: [
+          'WhatsApp+ (grupo privado) por R$ 249 único (SLA até 12h úteis)',
+          'Adicionar dependente com 25% OFF (matrícula isenta)'
+        ],
+        highlight: 'Ideal para testar a metodologia ScarX',
+        ctaText: 'Começar no Essential'
+      },
+      {
+        id: 'LEGACY',
+        name: 'LEGACY',
+        subtitle: 'Melhor custo-benefício - 10 meses',
+        duration: '10 meses',
+        icon: <Crown className="w-8 h-8" />,
+        color: 'from-purple-500 to-purple-600',
+        price: {
+          full: 'R$ 1.350',
+          description: 'à vista R$ 1.350 • ou 12x ~R$112/mês (gateway)',
+          installments: 'Matrícula isenta'
+        },
+        target: 'Para quem quer acompanhamento contínuo sem ruído',
+        features: [
+          'ScarX App completo + ScarX Sync mensal',
+          'WhatsApp grupo privado: respostas priorizadas 15-360 min úteis',
+          'Gerente de Relacionamento: ponto focal, motiva, resolve',
+          'Ajustes de plano sob demanda, retorno até 12h úteis',
+          'Plano de contingência de rotina (viagem, hotel, agenda imprevisível)'
+        ],
+        addons: [
+          'Pacote de calls com João Scar (1 inicial + 3 bimestrais)',
+          'ScarBox (caixa física) como upgrade',
+          'Dependente com 30% OFF + matrícula isenta'
+        ],
+        highlight: 'Melhor custo-benefício para transformações duradouras',
+        ctaText: 'Escolher Legacy'
+      },
+      {
+        id: 'PRIVATE',
+        name: 'PRIVATE',
+        subtitle: 'Experiência completa - 12 meses',
+        duration: '12 meses',
+        icon: <Users className="w-8 h-8" />,
+        color: 'from-amber-500 to-amber-600',
+        price: {
+          full: 'R$ 3.290',
+          description: 'à vista R$ 3.290 • ou 12x ~R$274/mês (gateway)',
+          installments: 'Matrícula isenta'
+        },
+        target: 'Para quem quer acesso direto e decisões rápidas',
+        features: [
+          '1×1 com João Scar: 1 sessão inicial + 4 bimestrais (5 no total)',
+          'WhatsApp ultra priorizado: respostas em 5-240 min úteis',
+          'Ajustes no mesmo dia (janela rápida)',
+          'ScarBox inclusa: carta + camisa DriveFit + Guia + balança bioimpedância',
+          'Parcerias clínicas (SP-Moema, RJ, Curitiba) para check-up/endócrino/estéticos',
+          'Plano de contingência de rotina premium'
+        ],
+        addons: [
+          'Calls extras (packs) com João Scar',
+          'Dependente com 50% OFF, matrícula isenta e 3 meses cortesia'
+        ],
+        highlight: 'Experiência premium com acesso direto ao fundador',
+        ctaText: 'Quero o Private'
+      }
+    ];
+
+    // Encontrar o índice do plano recomendado
+    const recommendedPlanIndex = plans.findIndex(plan => plan.id === result.planoRecomendado);
+    
+    // Definir o plano inicial como o recomendado, se encontrado
+    useEffect(() => {
+      if (recommendedPlanIndex !== -1) {
+        setCurrentPlanIndex(recommendedPlanIndex);
+      }
+    }, [recommendedPlanIndex]);
+
+    const nextPlan = () => {
+      setCurrentPlanIndex((prev) => (prev + 1) % plans.length);
+    };
+
+    const prevPlan = () => {
+      setCurrentPlanIndex((prev) => (prev - 1 + plans.length) % plans.length);
+    };
+
+    const currentPlan = plans[currentPlanIndex];
+    const isRecommended = currentPlan.id === result.planoRecomendado;
     
     const faqItems = [
       {
@@ -961,64 +1069,188 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       <div className="min-h-screen bg-dark text-light">
         <div className="max-w-4xl mx-auto p-4 space-y-8">
           
-                    {/* Resultado Principal */}
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+          {/* Resultado Principal */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             className="bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl p-8 text-center border border-primary/30"
           >
             <h2 className="text-2xl md:text-3xl font-bold mb-4 text-light">
-              Este é apenas uma recomendação. Você pode trocar os profissionais da sua equipe a qualquer momento.
+              Sua Análise Personalizada Está Pronta!
             </h2>
             <p className="text-lg text-light-muted mb-6">{result.analisePersonalizada}</p>
           </motion.div>
 
-          {/* Plano Recomendado */}
-        <motion.div
+          {/* Seção dos Planos - Carrossel */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/30 rounded-2xl p-8 text-center mb-8"
+            className="bg-dark-accent rounded-2xl p-8 border border-neutral-800 shadow-lg"
           >
-            <div className="mb-6">
-              <div className="inline-block text-sm font-medium text-dark bg-primary px-4 py-2 rounded-lg mb-4">
-                Seu Plano Recomendado
-              </div>
-              
-              {/* Emoji animado */}
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 10, -10, 0]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                }}
-                className="text-6xl mb-4"
-              >
-                🏆
-        </motion.div>
-              
-              <h3 className="text-3xl md:text-4xl font-bold text-light mb-4">
-                {result.planoRecomendado}
+            <div className="text-center mb-8">
+              <h3 className="text-2xl md:text-3xl font-bold text-light mb-4">
+                Escolha Seu Plano de Transformação
               </h3>
-              <p className="text-lg text-light-muted leading-relaxed max-w-2xl mx-auto">
-                {result.motivacao}
-        </p>
-      </div>
+              <p className="text-light-muted">
+                Com base na sua análise, recomendamos o plano ideal para seus objetivos
+              </p>
+            </div>
 
-            {discountAmount && (
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary-dark text-dark px-6 py-3 rounded-full font-bold text-lg shadow-lg">
-                <Star className="w-5 h-5" />
-                Seu Desconto: R$ {discountAmount},00 OFF
-                <Star className="w-5 h-5" />
-      </div>
-            )}
+            {/* Carrossel dos Planos */}
+            <div className="relative max-w-2xl mx-auto">
+              {/* Botões de Navegação */}
+              <div className="flex justify-between items-center mb-6">
+                <button
+                  onClick={prevPlan}
+                  className="p-3 rounded-full bg-dark-lighter border border-neutral-700 hover:border-primary/50 transition-all duration-300 group"
+                >
+                  <ChevronLeft className="w-6 h-6 text-light-muted group-hover:text-primary" />
+                </button>
+
+                <div className="flex gap-2">
+                  {plans.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentPlanIndex(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentPlanIndex 
+                          ? 'bg-primary' 
+                          : 'bg-neutral-700 hover:bg-neutral-600'
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={nextPlan}
+                  className="p-3 rounded-full bg-dark-lighter border border-neutral-700 hover:border-primary/50 transition-all duration-300 group"
+                >
+                  <ChevronRight className="w-6 h-6 text-light-muted group-hover:text-primary" />
+                </button>
+              </div>
+
+              {/* Card do Plano Atual */}
+              <motion.div
+                key={currentPlanIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.3 }}
+                className="relative"
+              >
+                {/* Badge de Recomendado */}
+                {isRecommended && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <div className="bg-gradient-to-r from-primary to-primary-dark text-dark px-6 py-2 rounded-full font-bold text-sm shadow-lg flex items-center gap-2">
+                      <Star className="w-4 h-4" />
+                      PLANO RECOMENDADO
+                      <Star className="w-4 h-4" />
+                    </div>
+                  </div>
+                )}
+
+                <div className={`relative overflow-hidden rounded-2xl border-2 ${
+                  isRecommended 
+                    ? 'border-primary shadow-2xl shadow-primary/20' 
+                    : 'border-neutral-700'
+                } bg-gradient-to-br from-dark-lighter to-dark-accent`}>
+                  
+                  {/* Header do Plano */}
+                  <div className={`bg-gradient-to-r ${currentPlan.color} p-6 text-center`}>
+                    <div className="flex justify-center mb-4">
+                      <div className="p-3 bg-white/20 rounded-full">
+                        {currentPlan.icon}
+                      </div>
+                    </div>
+                    <h4 className="text-2xl font-bold text-white mb-2">
+                      {currentPlan.name}
+                    </h4>
+                    <p className="text-white/90 text-sm">
+                      {currentPlan.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Conteúdo do Plano */}
+                  <div className="p-6">
+                    {/* Preço */}
+                    <div className="text-center mb-6">
+                      <div className="mb-4">
+                        <div className="text-3xl font-bold text-primary mb-2">
+                          {currentPlan.price.full}
+                        </div>
+                        <div className="text-sm text-light-muted mb-1">
+                          {currentPlan.price.description}
+                        </div>
+                        <div className="text-xs text-light-muted">
+                          {currentPlan.price.installments}
+                        </div>
+                      </div>
+                      <div className="text-sm text-light-muted mb-4">
+                        <strong>Para quem:</strong> {currentPlan.target}
+                      </div>
+                      <p className="text-light-muted font-medium">
+                        {currentPlan.highlight}
+                      </p>
+                    </div>
+
+                    {/* Features */}
+                    <div className="space-y-3 mb-6">
+                      <h5 className="text-sm font-bold text-primary uppercase tracking-wider">Entrega & SLAs:</h5>
+                      {currentPlan.features.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                          <span className="text-light-muted text-sm">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Add-ons */}
+                    {currentPlan.addons && currentPlan.addons.length > 0 && (
+                      <div className="space-y-3 mb-8">
+                        <h5 className="text-sm font-bold text-amber-500 uppercase tracking-wider">Add-ons:</h5>
+                        {currentPlan.addons.map((addon, index) => (
+                          <div key={index} className="flex items-start gap-3">
+                            <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="text-light-muted text-sm">{addon}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* CTA Button */}
+                    <div className="text-center">
+                      <a
+                        href={`https://wa.me/5541984961012?text=Olá! Completei o quiz da ScarX e gostaria de saber mais sobre o plano ${currentPlan.name}. ${discountAmount ? `Consegui um desconto de R$ ${discountAmount},00! ` : ''}Pode me ajudar?`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`w-full inline-flex items-center justify-center gap-3 py-5 px-8 rounded-2xl font-bold transition-all duration-500 transform relative overflow-hidden group ${
+                          isRecommended
+                            ? 'bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 text-white hover:from-emerald-300 hover:via-emerald-400 hover:to-emerald-500 hover:scale-[1.02] shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-400/40 border-2 border-emerald-300/50'
+                            : 'bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 text-white hover:from-blue-400 hover:via-blue-500 hover:to-purple-500 hover:scale-[1.02] shadow-2xl shadow-blue-500/30 hover:shadow-blue-400/40 border-2 border-blue-300/50'
+                        }`}
+                      >
+                        {/* Efeito de brilho animado */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        
+                        {/* Efeito de pulso para plano recomendado */}
+                        {isRecommended && (
+                          <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-emerald-600/20 rounded-2xl animate-pulse"></div>
+                        )}
+                        
+                        <div className="relative flex items-center gap-3 z-10">
+                          <span className="text-lg font-extrabold tracking-wide">{currentPlan.ctaText}</span>
+                          <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
 
-                    {/* Seção de Profissionais */}
+          {/* Seção de Profissionais */}
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1167,10 +1399,15 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
           >
                     <Link
               to="/experiencia"
-              className="bg-gradient-to-r from-primary to-primary-dark text-dark font-bold py-4 px-12 rounded-full text-lg hover:scale-105 transition-all duration-300 shadow-lg inline-flex items-center gap-3"
+              className="bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 hover:from-blue-400 hover:via-blue-500 hover:to-purple-500 text-white font-extrabold py-5 px-14 rounded-2xl text-lg hover:scale-[1.02] transition-all duration-500 shadow-2xl shadow-blue-500/30 hover:shadow-blue-400/50 inline-flex items-center gap-4 border-2 border-blue-300/50 relative overflow-hidden group transform"
             >
-              Ver experiência
-              <ArrowRight className="w-5 h-5" />
+              {/* Efeito de brilho animado */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              
+              <div className="relative flex items-center gap-4 z-10">
+                <span className="tracking-wide">Ver experiência</span>
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+              </div>
             </Link>
             <p className="text-sm text-light-muted mt-4 flex items-center justify-center gap-2">
               <Shield className="w-4 h-4" />
@@ -1350,12 +1587,21 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
             </p>
             <a
               href={`https://wa.me/5541984961012?text=Olá! Vi a experiência ScarX e quero começar minha transformação. ${result ? `Meu plano recomendado é o ${result.planoRecomendado}. ` : ''}${discount ? `Consegui um desconto de R$ ${discount},00 no quiz e ` : ''}Pode me ajudar?`}
-          target="_blank"
-          rel="noopener noreferrer"
-              className="bg-gradient-to-r from-primary to-primary-dark text-dark font-bold py-4 px-12 rounded-full text-lg hover:scale-105 transition-all duration-300 shadow-lg inline-flex items-center gap-3"
-        >
-              Começar Agora
-        </a>
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 hover:from-emerald-300 hover:via-emerald-400 hover:to-emerald-500 text-white font-extrabold py-5 px-16 rounded-2xl text-xl hover:scale-[1.02] transition-all duration-500 shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-400/50 inline-flex items-center gap-4 border-2 border-emerald-300/50 relative overflow-hidden group transform"
+            >
+              {/* Efeito de brilho animado */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              
+              {/* Efeito de pulso */}
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-emerald-600/20 rounded-2xl animate-pulse"></div>
+              
+              <div className="relative flex items-center gap-4 z-10">
+                <span className="tracking-wide">Começar Agora</span>
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+              </div>
+            </a>
       </div>
         </motion.div>
     </motion.div>

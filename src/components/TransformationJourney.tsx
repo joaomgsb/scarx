@@ -201,7 +201,7 @@ const TransformationJourney: React.FC = () => {
             <h2 className="text-primary mb-6">
               95% dos profissionais prescrevem o mesmo plano para corpos diferentes.
             </h2>
-            <p className="text-xl text-light-muted max-w-3xl mx-auto">
+            <p className="text-xl text-light max-w-3xl mx-auto">
               A escolha é sua: continuar com métodos genéricos ou experimentar a metodologia ScarX.
             </p>
           </motion.div>

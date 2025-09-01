@@ -97,7 +97,7 @@ const HeroVideo: React.FC = () => {
             <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 text-light text-xs md:text-base font-medium px-2">
               {features.map((feature, index) => (
                 <React.Fragment key={feature}>
-                  <span className="hover:text-primary transition-colors duration-300 cursor-pointer whitespace-nowrap">
+                  <span className="hover:text-primary transition-colors duration-300 whitespace-nowrap">
                     {feature}
                   </span>
                   {index < features.length - 1 && (

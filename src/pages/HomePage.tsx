@@ -6,7 +6,6 @@ import TransformationJourney from '../components/TransformationJourney';
 
 import ScarXForWho from '../components/ScarXForWho';
 import ResultsGallery from '../components/ResultsGallery';
-import DiscoverPlanCTA from '../components/DiscoverPlanCTA';
 import ProPlus from '../components/ProPlus';
 import Faq from '../components/Faq';
 import Footer from '../components/Footer';
@@ -54,10 +53,6 @@ const HomePage: React.FC = () => {
       
       <div id="exclusive-differentials">
         <ExclusiveDifferentials />
-      </div>
-
-      <div id="discover-plan">
-        <DiscoverPlanCTA />
       </div>
       
       <div id="app-showcase">

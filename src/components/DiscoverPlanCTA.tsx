@@ -62,14 +62,13 @@ const DiscoverPlanCTA: React.FC = () => {
 
 
   return (
-    <section id="discover-plan" className="relative py-8 md:py-12 overflow-hidden" ref={ref}>
+    <section id="discover-plan" className="relative py-8 md:py-12 bg-gradient-to-br from-dark via-dark to-gray-900 overflow-hidden" ref={ref}>
       {/* Background Premium Effects */}
       <div className="absolute inset-0">
-        {/* Fundo base consistente com o resto da LP */}
-        <div className="absolute inset-0 bg-dark" />
         
-        {/* Gradiente sutil para profundidade */}
-        <div className="absolute inset-0 bg-gradient-to-br from-dark via-dark to-neutral-900/50" />
+        {/* Background decorative elements - mesmos efeitos dos Diferenciais Exclusivos */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/3 rounded-full blur-3xl" />
         
         {/* Spotlight central mais sutil */}
         <motion.div 
@@ -143,27 +142,12 @@ const DiscoverPlanCTA: React.FC = () => {
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-primary-light to-primary rounded-xl blur opacity-75 group-hover:opacity-100 transition-opacity" />
                     <div className="relative flex items-center gap-2">
-                      <Brain className="w-5 h-5" />
                       <span>Iniciar Quiz</span>
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Link>
                 </div>
                 
-                <div className="flex items-center justify-center gap-4 text-light-gray text-xs">
-                  <div className="flex items-center gap-1.5">
-                    <Zap className="w-3.5 h-3.5 text-primary" />
-                    <span>5 minutos</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Shield className="w-3.5 h-3.5 text-primary" />
-                    <span>100% Gratuito</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Target className="w-3.5 h-3.5 text-primary" />
-                    <span>Resultado Imediato</span>
-                  </div>
-                </div>
+
               </div>
             </div>
           </motion.div>
