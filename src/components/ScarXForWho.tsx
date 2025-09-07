@@ -1,4 +1,5 @@
 import React from 'react';
+import { Check } from 'lucide-react';
 
 const ScarXForWho: React.FC = () => {
   return (
@@ -20,28 +21,28 @@ const ScarXForWho: React.FC = () => {
             
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <div className="w-5 h-5 bg-primary rounded-full mt-1 flex-shrink-0"></div>
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" strokeWidth={3} />
                 <p className="text-white text-lg">
                   Para quem deseja transformar o corpo com eficiência e liberdade.
                 </p>
               </div>
               
               <div className="flex items-start space-x-3">
-                <div className="w-5 h-5 bg-primary rounded-full mt-1 flex-shrink-0"></div>
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" strokeWidth={3} />
                 <p className="text-white text-lg">
                   Para quem já tentou de tudo e precisa de um método técnico, claro e aplicável.
                 </p>
               </div>
               
               <div className="flex items-start space-x-3">
-                <div className="w-5 h-5 bg-primary rounded-full mt-1 flex-shrink-0"></div>
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" strokeWidth={3} />
                 <p className="text-white text-lg">
                   Para iniciantes que querem uma base sólida e para avançados que buscam evolução contínua.
                 </p>
               </div>
               
               <div className="flex items-start space-x-3">
-                <div className="w-5 h-5 bg-primary rounded-full mt-1 flex-shrink-0"></div>
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" strokeWidth={3} />
                 <p className="text-white text-lg">
                   Um método que gera resultados reais, para qualquer corpo, em qualquer nível, em qualquer rotina.
                 </p>

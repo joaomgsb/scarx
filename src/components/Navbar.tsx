@@ -34,22 +34,24 @@ const Navbar: React.FC = () => {
 
   const navItems = [
     {
-              name: 'Conheça a ScarX',
+      name: 'Conheça a ScarX',
       type: 'dropdown',
       children: [
         { name: 'Início', to: 'hero', type: 'scroll' },
-        { name: 'Nossa História', to: 'journey', type: 'scroll' },
-        { name: 'O time por trás do seu novo físico', to: 'team', type: 'scroll' },
+        { name: 'Para quem é', to: 'scarx-for-who', type: 'scroll' },
+        { name: 'Resultados', to: 'results', type: 'scroll' },
+        { name: 'Clientes', to: 'clients', type: 'scroll' },
       ],
     },
     {
       name: 'Metodologia',
       type: 'dropdown',
       children: [
-        { name: 'Nossa Metodologia', to: 'methodology', type: 'scroll' },
-        { name: 'Resultados Comprovados', to: 'results', type: 'scroll' },
-        { name: 'Planos de Transformação', to: 'plans', type: 'scroll' },
+        { name: 'Por que somos diferentes', to: 'journey', type: 'scroll' },
+        { name: 'Como funciona na prática', to: 'hero-video', type: 'scroll' },
         { name: 'Plano PRO+', to: 'pro-plus', type: 'scroll' },
+        { name: 'Planos', to: 'plans', type: 'scroll' },
+        { name: 'Descubra seu plano', to: 'discover-plan', type: 'scroll' },
       ],
     },
     {

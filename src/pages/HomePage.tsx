@@ -13,7 +13,10 @@ import WhatsAppButton from '../components/WhatsAppButton';
 
 import AppShowcase from '../components/AppShowcase';
 import OurClients from '../components/OurClients';
-import ExclusiveDifferentials from '../components/ExclusiveDifferentials';
+import ElitePlan from '../components/ElitePlan';
+import DiscoverPlanCTA from '../components/DiscoverPlanCTA';
+import BetterMeStats from '../components/BetterMeStats';
+import BetterMeTeam from '../components/BetterMeTeam';
 
 const HomePage: React.FC = () => {
   // Scroll para o topo quando a página carrega
@@ -34,6 +37,10 @@ const HomePage: React.FC = () => {
       <div id="results">
         <ResultsGallery />
       </div>
+
+      <div id="betterme-stats">
+        <BetterMeStats />
+      </div>
       
       <div id="journey">
         <TransformationJourney />
@@ -46,21 +53,30 @@ const HomePage: React.FC = () => {
       <div id="scarx-for-who">
         <ScarXForWho />
       </div>
+
+      <div id="betterme-team">
+        <BetterMeTeam />
+      </div>
       
       <div id="pro-plus">
         <ProPlus />
       </div>
       
-      <div id="exclusive-differentials">
-        <ExclusiveDifferentials />
+      <div id="plans">
+        <ElitePlan />
       </div>
       
-      <div id="app-showcase">
-        <AppShowcase />
+      <div id="discover-plan">
+        <DiscoverPlanCTA />
       </div>
       
       <div id="clients">
         <OurClients />
+      </div>
+
+      {/* Tudo o que você precisa, no seu bolso. */}
+      <div id="app-showcase">
+        <AppShowcase />
       </div>
 
       <div id="faq">

@@ -62,41 +62,10 @@ const DiscoverPlanCTA: React.FC = () => {
 
 
   return (
-    <section id="discover-plan" className="relative py-8 md:py-12 bg-gradient-to-br from-dark via-dark to-gray-900 overflow-hidden" ref={ref}>
+    <section id="discover-plan" className="relative py-16 md:py-24 bg-dark overflow-hidden" ref={ref}>
       {/* Background Premium Effects */}
       <div className="absolute inset-0">
-        
-        {/* Background decorative elements - mesmos efeitos dos Diferenciais Exclusivos */}
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/3 rounded-full blur-3xl" />
-        
-        {/* Spotlight central mais sutil */}
-        <motion.div 
-          variants={glowVariants}
-          animate="animate"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-primary/10 via-primary/5 to-transparent rounded-full blur-3xl"
-        />
-        
-        {/* Partículas flutuantes mais sutis */}
-        <motion.div 
-          variants={floatingVariants}
-          animate="animate"
-          className="absolute top-1/4 left-1/4 w-24 h-24 bg-primary/8 rounded-full blur-2xl"
-        />
-        <motion.div 
-          variants={floatingVariants}
-          animate="animate"
-          className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-primary/6 rounded-full blur-3xl"
-          style={{ animationDelay: '2s' }}
-        />
-        
-        {/* Linhas de energia mais sutis */}
-        <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
-        <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
-        
-        {/* Elementos decorativos adicionais para consistência */}
-        <div className="absolute top-1/6 right-1/6 w-16 h-16 bg-primary/5 rounded-full blur-xl" />
-        <div className="absolute bottom-1/6 left-1/6 w-20 h-20 bg-primary/4 rounded-full blur-2xl" />
+        {/* Fundo sólido preto, sem partículas/linhas */}
       </div>
       
       <div className="container-custom relative z-10">
@@ -106,48 +75,53 @@ const DiscoverPlanCTA: React.FC = () => {
           animate={inView ? "visible" : "hidden"}
           className="max-w-6xl mx-auto"
         >
-          {/* Header */}
+          {/* Header elegante */}
           <motion.div variants={itemVariants} className="text-center mb-12">
             <motion.h2 
               variants={itemVariants}
-              className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-primary"
+              className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-primary"
             >
               Descubra o plano ideal para você
             </motion.h2>
             
             <motion.p 
               variants={itemVariants}
-              className="text-xl text-light-gray max-w-3xl mx-auto leading-relaxed mb-8"
+              className="text-lg md:text-xl text-light-muted max-w-3xl mx-auto leading-relaxed"
             >
-              Responda nosso quiz inteligente e descubra qual plano ScarX foi feito especialmente para seu perfil e objetivos.
+              Um quiz rápido e inteligente para indicar o plano perfeito para seu perfil.
             </motion.p>
           </motion.div>
 
           {/* Main CTA */}
           <motion.div variants={itemVariants} className="text-center">
-            <div className="relative max-w-2xl mx-auto">
-              <div className="bg-gradient-to-br from-neutral-800/90 to-neutral-900/90 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-primary/30 shadow-xl shadow-primary/10">
-                <h3 className="text-xl md:text-2xl font-bold mb-4 text-white">
-                  Pronto para descobrir seu plano ideal?
-                </h3>
-                
-                <p className="text-base text-light-gray mb-6 max-w-xl mx-auto">
-                  Em apenas 5 minutos, nossa IA analisará seu perfil e recomendará o plano perfeito para você.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-4">
+            <div className="relative max-w-4xl mx-auto">
+              <div className="bg-gradient-to-br from-black/80 to-gray-900/60 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-white/10">
+                <div className="text-center">
+                  <h3 className="text-3xl md:text-5xl font-bold mb-6 text-white leading-tight">
+                    Seu plano ideal,<br />
+                    <span className="text-primary">em minutos</span>
+                  </h3>
+                  
+                  <p className="text-xl md:text-2xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
+                    Responda algumas perguntas estratégicas e descubra qual plano ScarX foi desenhado para você.
+                  </p>
+
+                  <div className="space-y-4 mb-10">
+                    <div className="flex items-center justify-center gap-4 text-white/60">
+                      <div className="h-px bg-white/20 flex-1"></div>
+                      <span className="text-sm uppercase tracking-wider">Recomendação Personalizada</span>
+                      <div className="h-px bg-white/20 flex-1"></div>
+                    </div>
+                  </div>
+
                   <Link
                     to="/quiz"
-                    className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-primary via-primary-light to-primary text-black font-bold py-4 px-8 rounded-xl text-base shadow-xl hover:shadow-primary/50 transition-all duration-300 transform hover:scale-105"
+                    className="btn-primary text-lg"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary-light to-primary rounded-xl blur opacity-75 group-hover:opacity-100 transition-opacity" />
-                    <div className="relative flex items-center gap-2">
-                      <span>Iniciar Quiz</span>
-                    </div>
+                    <span>Descobrir meu plano</span>
+                    <ArrowRight className="w-5 h-5" />
                   </Link>
                 </div>
-                
-
               </div>
             </div>
           </motion.div>

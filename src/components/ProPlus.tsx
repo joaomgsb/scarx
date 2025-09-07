@@ -343,9 +343,8 @@ const ProPlus: React.FC = () => {
             <div className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 p-6 md:p-8">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
               <div className="relative">
-                <div className="flex items-center justify-center gap-2 mb-4 md:mb-6">
-                  <Shield className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  <span className="text-primary font-semibold text-base md:text-lg">Transformação Garantida</span>
+                <div className="text-primary font-semibold text-base md:text-lg mb-4 md:mb-6 text-center">
+                  Transformação Garantida
                 </div>
                 
                 <p className="text-base md:text-xl text-light-muted italic mb-6 md:mb-8 leading-relaxed max-w-3xl mx-auto">
@@ -356,11 +355,9 @@ const ProPlus: React.FC = () => {
                   href="https://wa.me/5541984961012?text=Olá! Quero contratar o Plano PRO+ - Experiência Premium da ScarX. Estou interessado na experiência exclusiva com Ana Fontes e todos os benefícios premium."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary inline-flex items-center gap-2 md:gap-3 text-sm md:text-lg px-4 md:px-8 py-2.5 md:py-4"
+                  className="btn-primary text-sm md:text-lg"
                 >
-                  <Zap className="w-4 h-4 md:w-6 md:h-6" />
                   Iniciar Minha Transformação PRO+
-                  <ArrowRight className="w-3 h-3 md:w-5 md:h-5" />
                 </a>
               </div>
             </div>

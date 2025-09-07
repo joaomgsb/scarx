@@ -80,7 +80,11 @@ const quizQuestions = [
     type: 'radio',
     question: 'Qual o seu sexo biológico?',
     name: 'sexoBiologico',
-    options: ['Feminino', 'Masculino', 'Prefiro não declarar'],
+    options: [
+      { value: 'Feminino', icon: '/emojis/female.svg' },
+      { value: 'Masculino', icon: '/emojis/male.svg' },
+      { value: 'Prefiro não declarar', icon: null }
+    ],
     required: true,
   },
   {
@@ -259,6 +263,8 @@ const loadingScreensData = [
   },
 ];
 
+
+
 interface QuizPageProps {
   experienceOnly?: boolean;
 }
@@ -282,6 +288,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
   
   const [discountAmount, setDiscountAmount] = useState<number | null>(null);
   const [showDiscountUnlock, setShowDiscountUnlock] = useState(false);
+
 
   // Scroll para o topo quando a página carrega
   useEffect(() => {
@@ -353,12 +360,36 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
 
   const handleRadioChange = useCallback((name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Trigger selection animation
+    const element = document.getElementById(`radio-${name}-${value.replace(/\s+/g, '-')}`);
+    if (element) {
+      element.parentElement?.classList.add('animate-pulse');
+      setTimeout(() => {
+        element.parentElement?.classList.remove('animate-pulse');
+      }, 600);
+    }
   }, []);
 
   const handleCheckboxChange = useCallback((name: string, value: string) => {
     setFormData(prev => {
       const currentValues = (prev[name] || []) as string[];
-      if (currentValues.includes(value)) {
+      const isRemoving = currentValues.includes(value);
+      
+      // Trigger selection animation
+      const element = document.getElementById(`checkbox-${name}-${value.replace(/\s+/g, '-')}`);
+      if (element) {
+        if (isRemoving) {
+          element.parentElement?.classList.add('animate-bounce');
+        } else {
+          element.parentElement?.classList.add('animate-pulse');
+        }
+        setTimeout(() => {
+          element.parentElement?.classList.remove('animate-bounce', 'animate-pulse');
+        }, 600);
+      }
+      
+      if (isRemoving) {
         return { ...prev, [name]: currentValues.filter(item => item !== value) };
       } else {
         return { ...prev, [name]: [...currentValues, value] };
@@ -391,6 +422,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
     }
     return true;
   }, [currentQuestion, formData]);
+
+
 
   // Navigation
   const handleNext = useCallback(async () => {
@@ -503,43 +536,74 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
     if (!currentQuestion) return null;
 
     const commonInputClasses = "w-full px-6 py-4 rounded-xl bg-dark-lighter border border-neutral-700 text-light focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 placeholder-light-muted";
-    const optionContainerClasses = "w-full bg-dark-lighter border border-neutral-700 rounded-xl cursor-pointer hover:bg-primary/10 hover:border-primary/30 transition-all duration-200 group overflow-hidden";
-    const optionContentClasses = "w-full p-5 flex items-center justify-between gap-4";
+    const optionContainerClasses = "w-full bg-dark-lighter border border-neutral-700 rounded-xl cursor-pointer hover:bg-primary/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 group overflow-hidden transform hover:scale-[1.02]";
+    const optionContentClasses = "w-full p-5 flex items-center justify-between gap-4 relative";
 
     switch (currentQuestion.type) {
       case 'radio':
         return (
           <div className="space-y-4">
-            {currentQuestion.options?.map(option => (
-              <div key={option} className={optionContainerClasses}>
-                <input
-                  type="radio"
-                  name={currentQuestion.name as string}
-                  value={option}
-                  checked={formData[currentQuestion.name as string] === option}
-                  onChange={() => handleRadioChange(currentQuestion.name as string, option)}
-                  className="hidden"
-                  id={`radio-${currentQuestion.name}-${option.replace(/\s+/g, '-')}`}
-                />
-                <label 
-                  htmlFor={`radio-${currentQuestion.name}-${option.replace(/\s+/g, '-')}`}
-                  className={optionContentClasses}
-                >
-                  <span className="text-lg font-medium text-light leading-relaxed">
-                  {option}
-                  </span>
-                  <span className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
-                    formData[currentQuestion.name as string] === option 
-                      ? 'border-primary bg-primary shadow-lg' 
-                      : 'border-neutral-600'
-                  }`}>
-                    {formData[currentQuestion.name as string] === option && (
-                      <span className="w-3 h-3 rounded-full bg-dark" />
-                    )}
-                </span>
-              </label>
-              </div>
-            ))}
+            {currentQuestion.options?.map(option => {
+              // Handle both string and object formats for options
+              const optionValue = typeof option === 'string' ? option : option.value;
+              const optionIcon = typeof option === 'object' ? option.icon : null;
+              
+              return (
+                <div key={optionValue} className={`${optionContainerClasses} ${
+                  formData[currentQuestion.name as string] === optionValue 
+                    ? 'bg-primary/20 border-primary shadow-xl shadow-primary/30 scale-[1.02]' 
+                    : ''
+                }`}>
+                  {/* Efeito de brilho animado */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 opacity-0 group-hover:opacity-100" />
+                  
+                  <input
+                    type="radio"
+                    name={currentQuestion.name as string}
+                    value={optionValue}
+                    checked={formData[currentQuestion.name as string] === optionValue}
+                    onChange={() => handleRadioChange(currentQuestion.name as string, optionValue)}
+                    className="hidden"
+                    id={`radio-${currentQuestion.name}-${optionValue.replace(/\s+/g, '-')}`}
+                  />
+                  <label 
+                    htmlFor={`radio-${currentQuestion.name}-${optionValue.replace(/\s+/g, '-')}`}
+                    className={optionContentClasses}
+                  >
+                    <div className="flex items-center gap-3 relative z-10">
+                      {optionIcon && (
+                        <img 
+                          src={optionIcon} 
+                          alt={optionValue}
+                          className="w-6 h-6 flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
+                        />
+                      )}
+                      <span className={`text-lg font-medium leading-relaxed transition-all duration-300 ${
+                        formData[currentQuestion.name as string] === optionValue 
+                          ? 'text-primary font-bold' 
+                          : 'text-light group-hover:text-primary'
+                      }`}>
+                        {optionValue}
+                      </span>
+                    </div>
+                    <span className={`w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 relative z-10 ${
+                      formData[currentQuestion.name as string] === optionValue 
+                        ? 'border-primary bg-primary shadow-lg shadow-primary/50 scale-110' 
+                        : 'border-neutral-600 group-hover:border-primary/50 group-hover:scale-105'
+                    }`}>
+                      {formData[currentQuestion.name as string] === optionValue && (
+                        <motion.span 
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                          className="w-3 h-3 rounded-full bg-dark" 
+                        />
+                      )}
+                    </span>
+                  </label>
+                </div>
+              );
+            })}
           </div>
         );
 
@@ -547,7 +611,14 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         return (
           <div className="space-y-4">
             {currentQuestion.options?.map(option => (
-              <div key={option} className={optionContainerClasses}>
+              <div key={option} className={`${optionContainerClasses} ${
+                ((formData[currentQuestion.name as string] as string[]) || []).includes(option)
+                  ? 'bg-primary/20 border-primary shadow-xl shadow-primary/30 scale-[1.02]' 
+                  : ''
+              }`}>
+                {/* Efeito de brilho animado */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 opacity-0 group-hover:opacity-100" />
+                
                 <input
                   type="checkbox"
                   name={currentQuestion.name as string}
@@ -561,16 +632,26 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                   htmlFor={`checkbox-${currentQuestion.name}-${option.replace(/\s+/g, '-')}`}
                   className={optionContentClasses}
                 >
-                  <span className="text-lg font-medium text-light leading-relaxed">
+                  <span className={`text-lg font-medium leading-relaxed transition-all duration-300 relative z-10 ${
+                    ((formData[currentQuestion.name as string] as string[]) || []).includes(option)
+                      ? 'text-primary font-bold' 
+                      : 'text-light group-hover:text-primary'
+                  }`}>
                   {option}
                   </span>
-                  <span className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all duration-200 ${
+                  <span className={`w-7 h-7 rounded border-2 flex items-center justify-center transition-all duration-300 relative z-10 ${
                     ((formData[currentQuestion.name as string] as string[]) || []).includes(option)
-                      ? 'border-primary bg-primary shadow-lg'
-                      : 'border-neutral-600'
+                      ? 'border-primary bg-primary shadow-lg shadow-primary/50 scale-110'
+                      : 'border-neutral-600 group-hover:border-primary/50 group-hover:scale-105'
                   }`}>
                     {((formData[currentQuestion.name as string] as string[]) || []).includes(option) && (
-                      <CheckCircle className="w-4 h-4 text-dark" />
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                      >
+                        <CheckCircle className="w-4 h-4 text-dark" />
+                      </motion.div>
                     )}
                 </span>
               </label>
@@ -593,6 +674,82 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         );
 
       case 'number':
+        const isWeightQuestion = currentQuestion.name === 'metaPeso';
+        const isMaxWeightQuestion = currentQuestion.name === 'pesoMaximo';
+        const currentValue = parseFloat(formData[currentQuestion.name as string]) || 0;
+        
+        if (isWeightQuestion || isMaxWeightQuestion) {
+          const minWeight = 30;
+          const maxWeight = 200;
+          
+          return (
+            <div className="space-y-6">
+              {/* Slider Visual */}
+              <div className="relative">
+                <div className="w-full h-2 bg-neutral-700 rounded-full relative overflow-hidden">
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-primary to-primary-dark rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${((currentValue - minWeight) / (maxWeight - minWeight)) * 100}%` }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+                
+
+                
+                {/* Weight markers */}
+                <div className="flex justify-between mt-2 text-xs text-light-muted">
+                  <span>30kg</span>
+                  <span>65kg</span>
+                  <span>100kg</span>
+                  <span>150kg</span>
+                  <span>200kg</span>
+                </div>
+              </div>
+              
+              {/* Visual Weight Display */}
+              <div className="text-center">
+                <motion.div
+                  key={currentValue}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="inline-block bg-primary/20 border border-primary/30 rounded-2xl px-8 py-4 mb-4"
+                >
+                  <span className="text-4xl font-bold text-primary">
+                    {currentValue || '--'}
+                  </span>
+                  <span className="text-lg text-light-muted ml-2">kg</span>
+                </motion.div>
+              </div>
+              
+              {/* Input Range */}
+              <input
+                type="range"
+                min={minWeight}
+                max={maxWeight}
+                step="1"
+                value={currentValue}
+                onChange={(e) => setFormData(prev => ({ ...prev, [currentQuestion.name as string]: e.target.value }))}
+                className="w-full h-2 bg-neutral-700 rounded-full appearance-none cursor-pointer slider opacity-0 absolute inset-0"
+              />
+              
+              {/* Manual Input */}
+              <div className="flex items-center justify-center gap-4">
+                <input
+                  type="number"
+                  name={currentQuestion.name as string}
+                  value={formData[currentQuestion.name as string]}
+                  onChange={handleInputChange}
+                  className="w-24 px-3 py-2 rounded-lg bg-dark-lighter border border-neutral-700 text-light text-center focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                  placeholder="kg"
+                  min={minWeight}
+                  max={maxWeight}
+                />
+              </div>
+            </div>
+          );
+        }
+        
         return (
           <div>
             <input
@@ -607,6 +764,139 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         );
 
       case 'number-pair':
+        const isPesoAltura = currentQuestion.name[0] === 'peso' && currentQuestion.name[1] === 'altura';
+        
+        if (isPesoAltura) {
+          const pesoValue = parseFloat(formData.peso) || 0;
+          const alturaValue = parseFloat(formData.altura) || 0;
+          
+          return (
+            <div className="space-y-8">
+              {/* Peso Slider */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-light">Peso (kg)</h4>
+                <div className="relative">
+                  <div className="w-full h-3 bg-neutral-700 rounded-full relative overflow-hidden">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${((pesoValue - 30) / (200 - 30)) * 100}%` }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
+                  
+                  <motion.div
+                    className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-7 h-7 bg-blue-500 rounded-full border-4 border-dark shadow-lg cursor-pointer"
+                    style={{ left: `${((pesoValue - 30) / (200 - 30)) * 100}%` }}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                  />
+                  
+                  <input
+                    type="range"
+                    min="30"
+                    max="200"
+                    step="0.5"
+                    value={pesoValue}
+                    onChange={(e) => handleNumberPairChange('peso', 'altura', e.target.value, formData.altura as string)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                </div>
+                
+                <div className="text-center">
+                  <motion.div
+                    key={pesoValue}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="inline-block bg-blue-500/20 border border-blue-500/30 rounded-xl px-6 py-3"
+                  >
+                    <span className="text-3xl font-bold text-blue-400">
+                      {pesoValue || '--'}
+                    </span>
+                    <span className="text-sm text-light-muted ml-2">kg</span>
+                  </motion.div>
+                </div>
+              </div>
+              
+              {/* Altura Slider */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-light">Altura (cm)</h4>
+                <div className="relative">
+                  <div className="w-full h-3 bg-neutral-700 rounded-full relative overflow-hidden">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${((alturaValue - 140) / (220 - 140)) * 100}%` }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
+                  
+                  <motion.div
+                    className="absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-7 h-7 bg-green-500 rounded-full border-4 border-dark shadow-lg cursor-pointer"
+                    style={{ left: `${((alturaValue - 140) / (220 - 140)) * 100}%` }}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                  />
+                  
+                  <input
+                    type="range"
+                    min="140"
+                    max="220"
+                    step="1"
+                    value={alturaValue}
+                    onChange={(e) => handleNumberPairChange('peso', 'altura', formData.peso as string, e.target.value)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                </div>
+                
+                <div className="text-center">
+                  <motion.div
+                    key={alturaValue}
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="inline-block bg-green-500/20 border border-green-500/30 rounded-xl px-6 py-3"
+                  >
+                    <span className="text-3xl font-bold text-green-400">
+                      {alturaValue || '--'}
+                    </span>
+                    <span className="text-sm text-light-muted ml-2">cm</span>
+                  </motion.div>
+                </div>
+              </div>
+              
+              {/* Manual Inputs */}
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-neutral-700">
+                <div className="text-center">
+                  <label className="block text-sm text-light-muted mb-2">Peso manual</label>
+                  <input
+                    type="number"
+                    name="peso"
+                    value={formData.peso}
+                    onChange={(e) => handleNumberPairChange('peso', 'altura', e.target.value, formData.altura as string)}
+                    className="w-full px-3 py-2 rounded-lg bg-dark-lighter border border-neutral-700 text-light text-center focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                    placeholder="kg"
+                    min="30"
+                    max="200"
+                  />
+                </div>
+                <div className="text-center">
+                  <label className="block text-sm text-light-muted mb-2">Altura manual</label>
+                  <input
+                    type="number"
+                    name="altura"
+                    value={formData.altura}
+                    onChange={(e) => handleNumberPairChange('peso', 'altura', formData.peso as string, e.target.value)}
+                    className="w-full px-3 py-2 rounded-lg bg-dark-lighter border border-neutral-700 text-light text-center focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                    placeholder="cm"
+                    min="140"
+                    max="220"
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        }
+        
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
@@ -793,6 +1083,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
     </motion.div>
   );
   };
+
+
 
   const DiscountUnlockScreen: React.FC<{ discount: number; onClose: () => void }> = ({ discount, onClose }) => (
     <motion.div
@@ -1657,6 +1949,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         {isLoading && <LoadingScreen message={loadingMessage} curiosity={loadingCuriosity} />}
       </AnimatePresence>
 
+
+
       {/* Discount Unlock Screen Overlay */}
       <AnimatePresence>
         {showDiscountUnlock && discountAmount && (
@@ -1696,33 +1990,63 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         </div>
       </div>
 
-      {/* Discount Display */}
-      {discountAmount && (
-        <div className="container mx-auto px-4 mb-4">
-          <div className="max-w-2xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-gradient-to-r from-primary to-primary-dark text-dark px-4 py-2 rounded-lg text-sm font-bold shadow-lg inline-flex items-center gap-1"
-            >
-              <Star className="w-4 h-4" />
-              R$ {discountAmount},00 OFF
-            </motion.div>
-          </div>
-        </div>
-      )}
+
 
       {/* Progress Bar */}
       <div className="container mx-auto px-4 mb-8">
         <div className="max-w-2xl mx-auto">
-          <div className="w-full bg-neutral-800 rounded-full h-3 shadow-inner">
+          
+              
+                                              {/* Discount Display */}
+                {discountAmount && (
+                  <div className="mb-4">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="bg-gradient-to-r from-primary to-primary-dark text-dark px-4 py-2 rounded-lg text-sm font-bold shadow-lg inline-flex items-center gap-1"
+                    >
+                      <Star className="w-4 h-4" />
+                      R$ {discountAmount},00 OFF
+                    </motion.div>
+                  </div>
+                )}
+           
+            <div className="w-full bg-neutral-800 rounded-full h-4 shadow-inner relative overflow-hidden">
+            {/* Background glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary-dark/10 rounded-full" />
+            
+            {/* Progress bar com efeito de brilho */}
             <motion.div
-              className="bg-gradient-to-r from-primary to-primary-dark h-3 rounded-full shadow-lg"
+              className="relative bg-gradient-to-r from-primary via-primary-light to-primary-dark h-4 rounded-full shadow-lg overflow-hidden"
               initial={{ width: 0 }}
               animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            />
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+            >
+              {/* Efeito de brilho deslizante */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transform animate-pulse" />
+            </motion.div>
+            
+            {/* Marcos visuais de progresso */}
+            {[25, 50, 75].map((percent, index) => {
+              const isReached = ((currentStep + 1) / totalSteps) * 100 >= percent;
+              return (
+                <motion.div 
+                  key={percent}
+                  className={`absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 transition-all duration-500 ${
+                    isReached 
+                      ? 'bg-white border-primary shadow-lg shadow-primary/30' 
+                      : 'bg-neutral-600 border-neutral-500'
+                  }`}
+                  style={{ left: `${percent}%` }}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: index * 0.1, type: "spring", stiffness: 300 }}
+                />
+              );
+            })}
+            
           </div>
+
 
         </div>
       </div>
@@ -1778,10 +2102,14 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                     <div className="space-y-1">
                     {renderQuestionContent()}
                     </div>
+                    
+
                   </div>
 
+
+
                   {/* Navigation Buttons */}
-                  <div className="relative z-10 flex justify-between items-center mt-10 pt-6 border-t border-neutral-700/50">
+                  <div className="relative z-10 flex justify-between items-center mt-6 pt-6 border-t border-neutral-700/50">
                     <button
                       onClick={handlePrev}
                       disabled={currentStep === 0}
@@ -1796,6 +2124,9 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                       disabled={!isCurrentQuestionAnswered() || isSubmittingOpenAI}
                       className="bg-gradient-to-r from-primary to-primary-dark text-dark font-bold py-3 px-8 rounded-xl hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 relative overflow-hidden"
                     >
+                      {/* Efeito de brilho no botão */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      
                       {currentStep === totalSteps - 1 ? (
                         isSubmittingOpenAI ? (
                           <>
@@ -1812,7 +2143,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                       ) : (
                         <>
                           Próximo
-                          <ArrowRight className="w-5 h-5" />
+                          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                         </>
                       )}
                     </button>

@@ -206,77 +206,213 @@ const TransformationJourney: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* Desktop Layout - Grid */}
-          <div className="hidden lg:grid lg:grid-cols-2 gap-6 lg:gap-8 mb-12">
-            {cards.map((card, index) => (
-              <motion.div key={card.id} variants={cardVariants}>
-                {renderCard(card)}
-              </motion.div>
-            ))}
+          {/* Layout Desktop - duas colunas */}
+          <div className="hidden lg:grid lg:grid-cols-2 gap-6 lg:gap-10 mb-12">
+            {/* Coluna: Métodos Tradicionais */}
+            <motion.div variants={itemVariants} className="space-y-4">
+              <div className="text-left">
+                <h3 className="text-2xl font-semibold text-white">Métodos Tradicionais</h3>
+                <div className="w-16 h-1 bg-white/20 mt-3 rounded-full" />
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#111111] border border-white/10">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/70">
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3h18v18H3z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-white">Protocolos Genéricos</p>
+                    <p className="text-white/60">Métodos que não consideram sua individualidade</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#111111] border border-white/10">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/70">
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-white">Falta de Acompanhamento</p>
+                    <p className="text-white/60">Você fica sozinho após receber o plano</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#111111] border border-white/10">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/70">
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-white">Resultados Temporários</p>
+                    <p className="text-white/60">Transformações que não se sustentam</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Coluna: Metodologia ScarFit */}
+            <motion.div variants={itemVariants} className="space-y-4">
+              <div className="text-left">
+                <h3 className="text-2xl font-semibold text-primary">Metodologia ScarX</h3>
+                <div className="w-16 h-1 bg-primary mt-3 rounded-full" />
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#0b0b0b] border border-primary/20">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-white">100% Personalizado</p>
+                    <p className="text-white/70">Protocolos únicos para seu biotipo e rotina</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#0b0b0b] border border-primary/20">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-white">Suporte Contínuo</p>
+                    <p className="text-white/70">Equipe multidisciplinar disponível diariamente</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#0b0b0b] border border-primary/20">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 17l6-6 4 4 8-8"/></svg>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-white">Transformação Duradoura</p>
+                    <p className="text-white/70">Mudanças que se mantêm para toda a vida</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Mobile Layout - Carousel */}
+          {/* Layout Mobile - Carrossel */}
           <div className="lg:hidden mb-12">
             <div className="relative">
-              {/* Carousel Container */}
-              <div className="relative overflow-hidden rounded-2xl">
+              {/* Conteúdo do carrossel */}
+              <div className="min-h-[500px]">
                 <motion.div
                   key={currentCard}
-                  custom={currentCard}
-                  variants={slideVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{
-                    x: { type: "spring", stiffness: 300, damping: 30 },
-                    opacity: { duration: 0.2 }
-                  }}
+                  initial={{ opacity: 0, x: currentCard === 0 ? -100 : 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: currentCard === 0 ? 100 : -100 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   drag="x"
                   dragConstraints={{ left: 0, right: 0 }}
                   dragElastic={1}
                   onDragEnd={(e, { offset, velocity }) => {
                     const swipe = swipePower(offset.x, velocity.x);
                     if (swipe < -swipeConfidenceThreshold) {
-                      paginate(1);
+                      setCurrentCard(currentCard === 0 ? 1 : 0);
                     } else if (swipe > swipeConfidenceThreshold) {
-                      paginate(-1);
+                      setCurrentCard(currentCard === 1 ? 0 : 1);
                     }
                   }}
-                  className="w-full"
+                  className="w-full px-4"
                 >
-                  {renderCard(cards[currentCard])}
+                  {currentCard === 0 ? (
+                    /* Card: Métodos Tradicionais */
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <h3 className="text-2xl font-semibold text-white">Métodos Tradicionais</h3>
+                        <div className="w-16 h-1 bg-white/20 mt-3 mx-auto rounded-full" />
+                      </div>
+                      <div className="space-y-4">
+                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#111111] border border-white/10">
+                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/70 flex-shrink-0">
+                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3h18v18H3z"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                          </div>
+                          <div>
+                            <p className="text-lg font-semibold text-white">Protocolos Genéricos</p>
+                            <p className="text-white/60 text-sm">Métodos que não consideram sua individualidade</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#111111] border border-white/10">
+                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/70 flex-shrink-0">
+                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                          </div>
+                          <div>
+                            <p className="text-lg font-semibold text-white">Falta de Acompanhamento</p>
+                            <p className="text-white/60 text-sm">Você fica sozinho após receber o plano</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#111111] border border-white/10">
+                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/70 flex-shrink-0">
+                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+                          </div>
+                          <div>
+                            <p className="text-lg font-semibold text-white">Resultados Temporários</p>
+                            <p className="text-white/60 text-sm">Transformações que não se sustentam</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    /* Card: Metodologia ScarFit */
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <h3 className="text-2xl font-semibold text-primary">Metodologia ScarX</h3>
+                        <div className="w-16 h-1 bg-primary mt-3 mx-auto rounded-full" />
+                      </div>
+                      <div className="space-y-4">
+                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#0b0b0b] border border-primary/20">
+                          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
+                          </div>
+                          <div>
+                            <p className="text-lg font-semibold text-white">100% Personalizado</p>
+                            <p className="text-white/70 text-sm">Protocolos únicos para seu biotipo e rotina</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#0b0b0b] border border-primary/20">
+                          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                          </div>
+                          <div>
+                            <p className="text-lg font-semibold text-white">Suporte Contínuo</p>
+                            <p className="text-white/70 text-sm">Equipe multidisciplinar disponível diariamente</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-[#0b0b0b] border border-primary/20">
+                          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 17l6-6 4 4 8-8"/></svg>
+                          </div>
+                          <div>
+                            <p className="text-lg font-semibold text-white">Transformação Duradoura</p>
+                            <p className="text-white/70 text-sm">Mudanças que se mantêm para toda a vida</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               </div>
 
-
-
-              {/* Dots Indicator */}
-              <div className="flex justify-center mt-4 gap-2">
-                {cards.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentCard(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      currentCard === index ? 'bg-primary w-6' : 'bg-neutral-600'
-                    }`}
-                    aria-label={`Ir para card ${index + 1}`}
-                  />
-                ))}
+              {/* Indicadores de navegação */}
+              <div className="flex justify-center mt-6 gap-2">
+                <button
+                  onClick={() => setCurrentCard(0)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    currentCard === 0 ? 'bg-white w-8' : 'bg-white/30'
+                  }`}
+                  aria-label="Métodos Tradicionais"
+                />
+                <button
+                  onClick={() => setCurrentCard(1)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    currentCard === 1 ? 'bg-primary w-8' : 'bg-white/30'
+                  }`}
+                  aria-label="Metodologia ScarX"
+                />
               </div>
             </div>
           </div>
 
           {/* CTA de transição */}
           <motion.div variants={itemVariants} className="text-center">
-            <div className="inline-flex items-center gap-4 glass-effect rounded-2xl px-6 py-4 border border-primary/20 bg-primary/5">
-              <div className="w-3 h-3 bg-primary rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-4 rounded-2xl px-6 py-4 border border-primary/20 bg-primary/5">
+              <div className="w-3 h-3 bg-primary rounded-full" />
               <span className="text-light font-medium text-base">
-              Entre performance e estilo de vida, prefira os dois.
+                Descubra como nossa metodologia funciona na prática
               </span>
             </div>
-            <p className="text-light-muted mt-3 text-base">
-              Descubra como nossa abordagem personalizada pode transformar sua vida.
-            </p>
           </motion.div>
         </motion.div>
       </div>

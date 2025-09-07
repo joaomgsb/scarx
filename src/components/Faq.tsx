@@ -224,7 +224,7 @@ const Faq: React.FC = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 bg-primary text-dark font-bold py-4 px-8 rounded-xl text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
               >
-                Converse Conosco: Sua Jornada Começa Aqui
+                QUERO TER MEU PLANO AGORA!
               </a>
             </div>
           </motion.div>
