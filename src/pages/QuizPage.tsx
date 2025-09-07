@@ -1329,31 +1329,31 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
     const beforeAfterCases = [
       {
         name: "Gabriel",
-        weightLoss: "-15kg",
+        weightLoss: "+17kg",
         image: "/images/gabrielantes.jpeg",
         imageAfter: "/images/gabrieldepois.jpeg",
-        testimonial: "A ScarX mudou minha vida completamente. Perdi 15kg de forma saudável e hoje me sinto muito mais confiante e disposto. O acompanhamento foi fundamental!"
+        testimonial: "A ScarX mudou minha vida completamente. Ganhei 15kg de massa magra de forma saudável e hoje me sinto muito mais confiante e disposto. O acompanhamento foi fundamental!"
       },
       {
         name: "Peter",
-        weightLoss: "-10kg", 
+        weightLoss: "-12kg", 
         image: "/images/peterantes.png",
         imageAfter: "/images/peterdepois.png",
         testimonial: "Nunca imaginei que conseguiria emagrecer de forma tão natural. O João Scar e a equipe fizeram toda a diferença na minha transformação."
       },
       {
         name: "Álvaro",
-        weightLoss: "-8kg",
+        weightLoss: "-26kg",
         image: "/images/alvaroantes.jpeg", 
         imageAfter: "/images/alvarodepois.jpeg",
         testimonial: "Com a metodologia da ScarX consegui não só emagrecer, mas também criar hábitos saudáveis que mantenho até hoje. Resultado incrível!"
       },
       {
         name: "Felipe",
-        weightLoss: "-12kg",
+        weightLoss: "+20kg",
         image: "/images/antes/felipeantes.jpeg",
         imageAfter: "/images/antes/felipedepois.jpeg", 
-        testimonial: "A equipe da ScarX me deu todo suporte necessário. Perdi 12kg e ganhei muito mais saúde e autoestima. Recomendo para todos!"
+        testimonial: "A equipe da ScarX me deu todo suporte necessário. Ganhei 20kg de massa magra e muito mais saúde e autoestima. Recomendo para todos!"
       }
     ];
 

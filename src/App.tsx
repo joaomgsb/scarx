@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import WeightCounter from './components/WeightCounter';
@@ -25,6 +25,14 @@ import ArtigosPage from './pages/ArtigosPage';
 import EstudosPage from './pages/EstudosPage';
 import QuizPage from './pages/QuizPage';
 
+const ScrollToTop: React.FC = () => {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  return null;
+};
+
 function App() {
   useEffect(() => {
     // Update document title
@@ -45,6 +53,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/calculadora-imc" element={<ImcPage />} />
