@@ -152,7 +152,7 @@ const BetterMeTeam: React.FC = () => {
 										animate="show"
 										exit="hidden"
 										transition={{ duration: 0.35, delay: 0.05 }}
-										className="absolute right-6 lg:right-10 xl:right-16 top-[50%] xl:top-[60%] max-w-xs xl:max-w-sm rounded-2xl px-5 py-4 text-sm bg-[#3498DB] text-white shadow-xl z-20">
+										className="absolute right-6 lg:right-10 xl:right-16 top-[50%] xl:top-[44%] 2xl:top-[60%] max-w-xs xl:max-w-sm rounded-2xl px-5 py-4 text-sm bg-[#3498DB] text-white shadow-xl z-20">
 											{current.chat.top}
 											<span className="absolute -right-3 bottom-4 w-3 h-3 bg-[#3498DB] rounded-full"></span>
 										</motion.div>
@@ -168,7 +168,7 @@ const BetterMeTeam: React.FC = () => {
 									animate="show"
 									exit="hidden"
 									transition={{ duration: 0.35, delay: 0.25 }}
-									className="absolute left-6 xl:left-12 bottom-[6%] xl:bottom-[14%] max-w-sm xl:max-w-md rounded-2xl px-5 py-4 text-sm bg-white text-dark shadow-xl z-10">
+									className="absolute left-6 xl:left-10 bottom-[6%] xl:bottom-[10%] max-w-sm xl:max-w-sm 2xl:max-w-md rounded-2xl px-5 py-4 text-sm bg-white text-dark shadow-xl z-10">
 										{current.chat.bottom}
 										<span className="absolute -left-3 bottom-4 w-3 h-3 bg-white rounded-full border border-neutral-200"></span>
 									</motion.div>
