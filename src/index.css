@@ -151,6 +151,18 @@
     border: 1px solid rgba(96, 165, 250, 0.3);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
+
+  /* Botão CTA dourado, com o mesmo efeito do primário */
+  .btn-gold {
+    @apply relative font-bold overflow-hidden;
+    color: #0A0A0A;
+    background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 40%, #F59E0B 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite, pulse 2s ease-in-out infinite;
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35), inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  }
   
   @keyframes gradientShift {
     0% { background-position: 0% 50%; }
@@ -167,7 +179,8 @@
     }
   }
   
-  .btn-primary::before {
+  .btn-primary::before,
+  .btn-gold::before {
     content: '';
     @apply absolute inset-0;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
@@ -175,7 +188,8 @@
     transition: transform 0.8s;
   }
   
-  .btn-primary:hover::before {
+  .btn-primary:hover::before,
+  .btn-gold:hover::before {
     transform: translateX(100%);
   }
   
@@ -183,8 +197,14 @@
     transform: translateY(-2px) scale(1.05);
     box-shadow: 0 12px 35px rgba(59, 130, 246, 0.45), inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
+
+  .btn-gold:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(245, 158, 11, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  }
   
-  .btn-primary:active {
+  .btn-primary:active,
+  .btn-gold:active {
     transform: translateY(0) scale(1.02);
   }
   

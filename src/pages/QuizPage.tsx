@@ -610,53 +610,56 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       case 'checkbox':
         return (
           <div className="space-y-4">
-            {currentQuestion.options?.map(option => (
-              <div key={option} className={`${optionContainerClasses} ${
-                ((formData[currentQuestion.name as string] as string[]) || []).includes(option)
-                  ? 'bg-primary/20 border-primary shadow-xl shadow-primary/30 scale-[1.02]' 
-                  : ''
-              }`}>
-                {/* Efeito de brilho animado */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 opacity-0 group-hover:opacity-100" />
-                
-                <input
-                  type="checkbox"
-                  name={currentQuestion.name as string}
-                  value={option}
-                  checked={(formData[currentQuestion.name as string] as string[]).includes(option)}
-                  onChange={() => handleCheckboxChange(currentQuestion.name as string, option)}
-                  className="hidden"
-                  id={`checkbox-${currentQuestion.name}-${option.replace(/\s+/g, '-')}`}
-                />
-                <label 
-                  htmlFor={`checkbox-${currentQuestion.name}-${option.replace(/\s+/g, '-')}`}
-                  className={optionContentClasses}
-                >
-                  <span className={`text-lg font-medium leading-relaxed transition-all duration-300 relative z-10 ${
-                    ((formData[currentQuestion.name as string] as string[]) || []).includes(option)
-                      ? 'text-primary font-bold' 
-                      : 'text-light group-hover:text-primary'
-                  }`}>
-                  {option}
+            {currentQuestion.options?.map(option => {
+              const optionValue = typeof option === 'string' ? option : (option && typeof option === 'object' && 'value' in option ? (option as any).value : String(option));
+              return (
+                <div key={optionValue} className={`${optionContainerClasses} ${
+                  ((formData[currentQuestion.name as string] as string[]) || []).includes(optionValue)
+                    ? 'bg-primary/20 border-primary shadow-xl shadow-primary/30 scale-[1.02]'
+                    : ''
+                }`}>
+                  {/* Efeito de brilho animado */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 opacity-0 group-hover:opacity-100" />
+                  
+                  <input
+                    type="checkbox"
+                    name={currentQuestion.name as string}
+                    value={optionValue}
+                    checked={(formData[currentQuestion.name as string] as string[]).includes(optionValue)}
+                    onChange={() => handleCheckboxChange(currentQuestion.name as string, optionValue)}
+                    className="hidden"
+                    id={`checkbox-${currentQuestion.name}-${optionValue.replace(/\s+/g, '-')}`}
+                  />
+                  <label 
+                    htmlFor={`checkbox-${currentQuestion.name}-${optionValue.replace(/\s+/g, '-')}`}
+                    className={optionContentClasses}
+                  >
+                    <span className={`text-lg font-medium leading-relaxed transition-all duration-300 relative z-10 ${
+                      ((formData[currentQuestion.name as string] as string[]) || []).includes(optionValue)
+                        ? 'text-primary font-bold' 
+                        : 'text-light group-hover:text-primary'
+                    }`}>
+                    {optionValue}
+                    </span>
+                    <span className={`w-7 h-7 rounded border-2 flex items-center justify-center transition-all duration-300 relative z-10 ${
+                      ((formData[currentQuestion.name as string] as string[]) || []).includes(optionValue)
+                        ? 'border-primary bg-primary shadow-lg shadow-primary/50 scale-110'
+                        : 'border-neutral-600 group-hover:border-primary/50 group-hover:scale-105'
+                    }`}>
+                      {((formData[currentQuestion.name as string] as string[]) || []).includes(optionValue) && (
+                        <motion.div
+                          initial={{ scale: 0, rotate: -180 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                        >
+                          <CheckCircle className="w-4 h-4 text-dark" />
+                        </motion.div>
+                      )}
                   </span>
-                  <span className={`w-7 h-7 rounded border-2 flex items-center justify-center transition-all duration-300 relative z-10 ${
-                    ((formData[currentQuestion.name as string] as string[]) || []).includes(option)
-                      ? 'border-primary bg-primary shadow-lg shadow-primary/50 scale-110'
-                      : 'border-neutral-600 group-hover:border-primary/50 group-hover:scale-105'
-                  }`}>
-                    {((formData[currentQuestion.name as string] as string[]) || []).includes(option) && (
-                      <motion.div
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                      >
-                        <CheckCircle className="w-4 h-4 text-dark" />
-                      </motion.div>
-                    )}
-                </span>
-              </label>
-              </div>
-            ))}
+                </label>
+                </div>
+              );
+            })}
           </div>
         );
 
@@ -676,7 +679,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       case 'number':
         const isWeightQuestion = currentQuestion.name === 'metaPeso';
         const isMaxWeightQuestion = currentQuestion.name === 'pesoMaximo';
-        const currentValue = parseFloat(formData[currentQuestion.name as string]) || 0;
+        const rawValue = formData[currentQuestion.name as string];
+        const currentValue = parseFloat(Array.isArray(rawValue) ? '0' : (rawValue || '0')) || 0;
         
         if (isWeightQuestion || isMaxWeightQuestion) {
           const minWeight = 30;
@@ -687,15 +691,22 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
               {/* Slider Visual */}
               <div className="relative">
                 <div className="w-full h-2 bg-neutral-700 rounded-full relative overflow-hidden">
-                  <motion.div
+                  <div
                     className="h-full bg-gradient-to-r from-primary to-primary-dark rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${((currentValue - minWeight) / (maxWeight - minWeight)) * 100}%` }}
-                    transition={{ duration: 0.3 }}
+                    style={{ width: `${((currentValue - minWeight) / (maxWeight - minWeight)) * 100}%` }}
+                  />
+                  <input
+                    type="range"
+                    min={minWeight}
+                    max={maxWeight}
+                    step="1"
+                    value={currentValue}
+                    onChange={(e) => setFormData(prev => ({ ...prev, [currentQuestion.name as string]: e.target.value }))}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
                 </div>
                 
-
+                
                 
                 {/* Weight markers */}
                 <div className="flex justify-between mt-2 text-xs text-light-muted">
@@ -722,30 +733,19 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                 </motion.div>
               </div>
               
-              {/* Input Range */}
-              <input
-                type="range"
-                min={minWeight}
-                max={maxWeight}
-                step="1"
-                value={currentValue}
-                onChange={(e) => setFormData(prev => ({ ...prev, [currentQuestion.name as string]: e.target.value }))}
-                className="w-full h-2 bg-neutral-700 rounded-full appearance-none cursor-pointer slider opacity-0 absolute inset-0"
-              />
-              
-              {/* Manual Input */}
-              <div className="flex items-center justify-center gap-4">
-                <input
-                  type="number"
-                  name={currentQuestion.name as string}
-                  value={formData[currentQuestion.name as string]}
-                  onChange={handleInputChange}
-                  className="w-24 px-3 py-2 rounded-lg bg-dark-lighter border border-neutral-700 text-light text-center focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
-                  placeholder="kg"
-                  min={minWeight}
-                  max={maxWeight}
-                />
-              </div>
+               {/* Manual Input */}
+               <div className="flex items-center justify-center gap-4">
+                 <input
+                   type="number"
+                   name={currentQuestion.name as string}
+                   value={formData[currentQuestion.name as string]}
+                   onChange={handleInputChange}
+                   className="w-24 px-3 py-2 rounded-lg bg-dark-lighter border border-neutral-700 text-light text-center focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                   placeholder="kg"
+                   min={minWeight}
+                   max={maxWeight}
+                 />
+               </div>
             </div>
           );
         }
@@ -777,11 +777,9 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                 <h4 className="text-lg font-semibold text-light">Peso (kg)</h4>
                 <div className="relative">
                   <div className="w-full h-3 bg-neutral-700 rounded-full relative overflow-hidden">
-                    <motion.div
+                    <div
                       className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${((pesoValue - 30) / (200 - 30)) * 100}%` }}
-                      transition={{ duration: 0.3 }}
+                      style={{ width: `${((pesoValue - 30) / (200 - 30)) * 100}%` }}
                     />
                   </div>
                   
@@ -823,11 +821,9 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                 <h4 className="text-lg font-semibold text-light">Altura (cm)</h4>
                 <div className="relative">
                   <div className="w-full h-3 bg-neutral-700 rounded-full relative overflow-hidden">
-                    <motion.div
+                    <div
                       className="h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${((alturaValue - 140) / (220 - 140)) * 100}%` }}
-                      transition={{ duration: 0.3 }}
+                      style={{ width: `${((alturaValue - 140) / (220 - 140)) * 100}%` }}
                     />
                   </div>
                   
@@ -1133,6 +1129,38 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
     const [currentPlanIndex, setCurrentPlanIndex] = useState(0);
     
+    // Função para extrair valor numérico do preço
+    const extractPrice = (priceString: string): number => {
+      const match = priceString.match(/R\$\s*([\d.,]+)/);
+      if (match) {
+        return parseFloat(match[1].replace('.', '').replace(',', '.'));
+      }
+      return 0;
+    };
+    
+    // Função para aplicar desconto no preço
+    const applyDiscount = (originalPrice: number, discount: number): number => {
+      return Math.max(0, originalPrice - discount);
+    };
+    
+    // Função para formatar preço com desconto (preço final permanece igual ao normal)
+    // Exibe o preço "inflado" riscado (preço normal + desconto) e o preço com desconto igual ao normal
+    const formatDiscountedPrice = (priceString: string, discount: number): { original: string; discounted: string; savings: string } => {
+      const normalValue = extractPrice(priceString);
+      const inflatedValue = Math.max(0, normalValue + discount);
+      return {
+        original: `R$ ${inflatedValue.toLocaleString('pt-BR')}`,
+        discounted: `R$ ${normalValue.toLocaleString('pt-BR')}`,
+        savings: `R$ ${discount.toLocaleString('pt-BR')}`
+      };
+    };
+    
+    // Função para atualizar descrição do preço com desconto (mantendo preço final normal)
+    const formatDiscountedDescription = (description: string, normalPrice: string, inflatedPrice: string): string => {
+      // Substitui a primeira ocorrência do preço por um preço inflado para exibir riscado, mas mantemos texto original abaixo
+      return description.replace(normalPrice.replace('R$ ', 'R$'), inflatedPrice.replace('R$ ', 'R$'));
+    };
+    
     // Planos disponíveis
     const plans = [
       {
@@ -1141,7 +1169,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         subtitle: 'Isca de entrada - 3 meses',
         duration: '3 meses',
         icon: <Zap className="w-8 h-8" />,
-        color: 'from-blue-500 to-blue-600',
+        color: 'from-neutral-900 to-neutral-800',
         price: {
           full: 'R$ 469',
           description: 'à vista R$469 (R$175 matrícula + R$294 plano 3 meses)',
@@ -1167,7 +1195,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         subtitle: 'Melhor custo-benefício - 10 meses',
         duration: '10 meses',
         icon: <Crown className="w-8 h-8" />,
-        color: 'from-purple-500 to-purple-600',
+        color: 'from-neutral-500 to-neutral-600',
         price: {
           full: 'R$ 1.350',
           description: 'à vista R$ 1.350 • ou 12x ~R$112/mês (gateway)',
@@ -1195,7 +1223,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         subtitle: 'Experiência completa - 12 meses',
         duration: '12 meses',
         icon: <Users className="w-8 h-8" />,
-        color: 'from-amber-500 to-amber-600',
+        color: 'from-blue-500 to-blue-600',
         price: {
           full: 'R$ 3.290',
           description: 'à vista R$ 3.290 • ou 12x ~R$274/mês (gateway)',
@@ -1468,11 +1496,35 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                     {/* Preço */}
                     <div className="text-center mb-6">
                       <div className="mb-4">
-                        <div className="text-3xl font-bold text-primary mb-2">
-                          {currentPlan.price.full}
-                        </div>
+                        {discountAmount ? (
+                          <>
+                            {/* Preço "inflado" riscado (normal + desconto) */}
+                            <div className="text-lg text-light-muted line-through mb-1">
+                              {formatDiscountedPrice(currentPlan.price.full, discountAmount).original}
+                            </div>
+                            {/* Preço final (normal) */}
+                            <div className="text-3xl font-bold text-primary mb-2">
+                              {formatDiscountedPrice(currentPlan.price.full, discountAmount).discounted}
+                            </div>
+                            {/* Badge de economia */}
+                            <div className="inline-block bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-bold mb-2">
+                              Você economiza {formatDiscountedPrice(currentPlan.price.full, discountAmount).savings}
+                            </div>
+                          </>
+                        ) : (
+                          <div className="text-3xl font-bold text-primary mb-2">
+                            {currentPlan.price.full}
+                          </div>
+                        )}
                         <div className="text-sm text-light-muted mb-1">
-                          {currentPlan.price.description}
+                          {discountAmount 
+                            ? formatDiscountedDescription(
+                                currentPlan.price.description, 
+                                currentPlan.price.full, 
+                                formatDiscountedPrice(currentPlan.price.full, discountAmount).original
+                              )
+                            : currentPlan.price.description
+                          }
                         </div>
                         <div className="text-xs text-light-muted">
                           {currentPlan.price.installments}
@@ -1517,9 +1569,11 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`w-full inline-flex items-center justify-center gap-3 py-5 px-8 rounded-2xl font-bold transition-all duration-500 transform relative overflow-hidden group ${
-                          isRecommended
-                            ? 'bg-gradient-to-r from-emerald-400 via-emerald-500 to-emerald-600 text-white hover:from-emerald-300 hover:via-emerald-400 hover:to-emerald-500 hover:scale-[1.02] shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-400/40 border-2 border-emerald-300/50'
-                            : 'bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 text-white hover:from-blue-400 hover:via-blue-500 hover:to-purple-500 hover:scale-[1.02] shadow-2xl shadow-blue-500/30 hover:shadow-blue-400/40 border-2 border-blue-300/50'
+                          currentPlan.id === 'ESSENTIAL'
+                            ? 'bg-gradient-to-r from-neutral-800 via-neutral-900 to-black text-white hover:from-neutral-700 hover:via-neutral-800 hover:to-neutral-900 hover:scale-[1.02] shadow-2xl shadow-neutral-900/50 hover:shadow-neutral-700/60 border-2 border-neutral-600/50'
+                            : currentPlan.id === 'LEGACY'
+                              ? 'bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 text-white hover:from-slate-600 hover:via-slate-700 hover:to-slate-800 hover:scale-[1.02] shadow-2xl shadow-slate-900/60 hover:shadow-slate-700/70 border-2 border-slate-500/50'
+                              : 'bg-gradient-to-r from-blue-500 via-blue-600 to-purple-600 text-white hover:from-blue-400 hover:via-blue-500 hover:to-purple-500 hover:scale-[1.02] shadow-2xl shadow-blue-500/30 hover:shadow-blue-400/40 border-2 border-blue-300/50'
                         }`}
                       >
                         {/* Efeito de brilho animado */}
@@ -1572,11 +1626,6 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                       <p className="text-light-muted text-sm mb-3">{prof.credentials}</p>
                       <p className="text-light-muted leading-relaxed">{prof.description}</p>
                     </div>
-                  </div>
-                  <div className="mt-4 flex justify-end">
-                    <button className="bg-primary text-dark px-6 py-2 rounded-lg text-sm font-medium hover:bg-primary-dark transition-colors">
-                      + Saiba mais
-                    </button>
                   </div>
                 </div>
               ))}
@@ -1717,6 +1766,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       {
         id: 1,
         animationData: etapa1Animation,
+        image: '/metodologia/ARTE 1.png',
+        frames: ['/metodologia/frame1-arte1.png', '/metodologia/frame2-arte1.png'],
         content: {
           title: "Análise Profunda",
           subtitle: "Avaliação completa do seu perfil físico, rotina e objetivos. Dados precisos para criar um plano único e eficaz.",
@@ -1730,6 +1781,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       {
         id: 2,
         animationData: etapa2Animation,
+        image: '/metodologia/ARTE 2.png',
+        frames: ['/metodologia/frame1-arte2.png', '/metodologia/frame2-arte2.png'],
         content: {
           title: "Protocolo Personalizado",
           subtitle: "Treinos e nutrição 100% adaptados ao seu biotipo e estilo de vida. Estratégico, eficaz e sustentável.",
@@ -1743,6 +1796,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       {
         id: 3,
         animationData: etapa3Animation,
+        image: '/metodologia/ARTE 3.png',
+        frames: [],
         content: {
           title: "Acompanhamento Diário",
           subtitle: "Suporte contínuo da equipe multidisciplinar via WhatsApp. Ajustes em tempo real para garantir sua evolução.",
@@ -1756,6 +1811,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       {
         id: 4,
         animationData: etapa4Animation,
+        image: '/metodologia/ARTE 4.png',
+        frames: ['/metodologia/frame1-arte4.png'],
         content: {
           title: "Evolução Constante",
           subtitle: "Monitoramento de resultados e otimização contínua. Transformações duradouras que se mantêm para sempre.",
@@ -1786,6 +1843,12 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
         opacity: 1,
         transition: { duration: 0.8, ease: "easeOut" },
       },
+    };
+
+    // Variantes para bolhas de chat (estilo BetterMeTeam)
+    const chatBubbleVariants = {
+      hidden: { opacity: 0, y: 10, scale: 0.98 },
+      show: { opacity: 1, y: 0, scale: 1 },
     };
 
     return (
@@ -1847,13 +1910,119 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
 
                 {/* Animation */}
                 <div className={`flex items-center justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div className="w-full max-w-md lg:max-w-lg">
-                    <div className="bg-gradient-to-br from-dark-accent to-dark-lighter rounded-2xl p-8 border border-neutral-700 shadow-2xl">
-                      <Lottie
-                        animationData={step.animationData}
-                        className="w-full h-auto aspect-square"
-                      />
-          </div>
+                  <div className="w-full max-w-3xl">
+                    <div className="rounded-2xl">
+                      <div className="relative rounded-xl overflow-hidden">
+                        {step.image ? (
+                          <img
+                            src={step.image}
+                            alt={`Etapa ${step.id}`}
+                            className="w-full h-auto"
+                          />
+                        ) : (
+                          <Lottie
+                            animationData={step.animationData}
+                            className="w-full h-auto aspect-square"
+                          />
+                        )}
+
+                        {/* Chat bubbles na Etapa 3 (estilo "Encontre sua equipe perfeita") */}
+                        {step.id === 3 && (
+                          <>
+                            {/* Balão azul (superior direita) */}
+                            <motion.div
+                              variants={chatBubbleVariants}
+                              initial="hidden"
+                              whileInView="show"
+                              viewport={{ once: true, amount: 0.6 }}
+                              transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.15 }}
+                              animate={{ y: [0, -3, 0], transition: { repeat: Infinity, repeatType: 'mirror', duration: 5, ease: 'easeInOut', delay: 1 } }}
+                              className="absolute right-6 md:right-10 top-[45%] md:top-[72%] max-w-sm rounded-2xl px-4 py-3 text-sm bg-[#3498DB] text-white shadow-xl"
+                            >
+                              Preciso de ajuda com a rotina desta semana.
+                              <span className="absolute -right-3 bottom-4 w-3 h-3 bg-[#3498DB] rounded-full"></span>
+                            </motion.div>
+                            {/* Balão branco (inferior esquerda) */}
+                            <motion.div
+                              variants={chatBubbleVariants}
+                              initial="hidden"
+                              whileInView="show"
+                              viewport={{ once: true, amount: 0.6 }}
+                              transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.35 }}
+                              animate={{ y: [0, -2, 0], transition: { repeat: Infinity, repeatType: 'mirror', duration: 6, ease: 'easeInOut', delay: 1.2 } }}
+                              className="absolute left-6 md:left-10 bottom-[15%] md:bottom-[8%] max-w-md rounded-2xl px-4 py-3 text-sm bg-white text-dark shadow-xl"
+                            >
+                              Vamos ajustar treinos e refeições para caber no seu tempo. 👌
+                              <span className="absolute -left-3 bottom-4 w-3 h-3 bg-white rounded-full border border-neutral-200"></span>
+                            </motion.div>
+                          </>
+                        )}
+
+                        {/* Frames overlays com animação (in-view) */}
+                        {/* Etapa 4: overlay centralizado com flex */}
+                        {step.id === 4 && step.frames && step.frames[0] && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true, amount: 0.6 }}
+                            transition={{ duration: 0.7, ease: 'easeOut' }}
+                            className="absolute inset-0 flex items-center justify-center"
+                          >
+                            <img
+                              src={step.frames[0]}
+                              alt="frame central"
+                              className="w-3/4 max-w-[520px] drop-shadow-[0_10px_25px_rgba(0,0,0,0.35)] pointer-events-none select-none"
+                            />
+                          </motion.div>
+                        )}
+
+                        {/* Demais etapas: frames nos cantos com animação ao entrar na viewport */}
+                        {step.id !== 4 && step.frames && step.frames[0] && (
+                          step.id === 1 ? (
+                            <motion.img
+                              src={step.frames[0]}
+                              alt="frame 1"
+                              initial={{ opacity: 0, y: -20, scale: 0.9, rotate: -4 }}
+                              animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+                              className="absolute top-4 left-4 w-1/2 max-w-[360px] drop-shadow-[0_10px_25px_rgba(0,0,0,0.35)] pointer-events-none select-none"
+                            />
+                          ) : (
+                            <motion.img
+                              src={step.frames[0]}
+                              alt="frame 1"
+                              initial={{ opacity: 0, y: -20, scale: 0.9, rotate: -4 }}
+                              whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                              viewport={{ once: true, amount: 0.6 }}
+                              transition={{ duration: 0.6, ease: 'easeOut' }}
+                              className="absolute top-4 left-4 w-1/2 max-w-[360px] drop-shadow-[0_10px_25px_rgba(0,0,0,0.35)] pointer-events-none select-none"
+                            />
+                          )
+                        )}
+                        {step.id !== 4 && step.frames && step.frames[1] && (
+                          step.id === 1 ? (
+                            <motion.img
+                              src={step.frames[1]} 
+                              alt="frame 2"
+                              initial={{ opacity: 0, y: 20, scale: 0.9, rotate: 4 }}
+                              animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.22 }}
+                              className="absolute bottom-4 right-4 w-1/2 max-w-[360px] drop-shadow-[0_10px_25px_rgba(0,0,0,0.35)] pointer-events-none select-none"
+                            />
+                          ) : (
+                            <motion.img
+                              src={step.frames[1]} 
+                              alt="frame 2"
+                              initial={{ opacity: 0, y: 20, scale: 0.9, rotate: 4 }}
+                              whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                              viewport={{ once: true, amount: 0.6 }}
+                              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.12 }}
+                              className="absolute bottom-4 right-4 w-1/2 max-w-[360px] drop-shadow-[0_10px_25px_rgba(0,0,0,0.35)] pointer-events-none select-none"
+                            />
+                          )
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2011,13 +2180,13 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
                   </div>
                 )}
            
-            <div className="w-full bg-neutral-800 rounded-full h-4 shadow-inner relative overflow-hidden">
+            <div className="w-full bg-neutral-800 rounded-full h-5 shadow-inner relative overflow-hidden">
             {/* Background glow effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary-dark/10 rounded-full" />
             
             {/* Progress bar com efeito de brilho */}
             <motion.div
-              className="relative bg-gradient-to-r from-primary via-primary-light to-primary-dark h-4 rounded-full shadow-lg overflow-hidden"
+              className="relative bg-gradient-to-r from-primary via-primary-light to-primary-dark h-5 rounded-full shadow-lg overflow-hidden"
               initial={{ width: 0 }}
               animate={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
@@ -2032,7 +2201,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
               return (
                 <motion.div 
                   key={percent}
-                  className={`absolute top-1/2 transform -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 transition-all duration-500 ${
+                  className={`absolute z-10 top-1/2 transform -translate-y-1/2 -translate-x-1/2 -mt-[2px] w-3 h-3 rounded-full border-2 transition-all duration-500 ${
                     isReached 
                       ? 'bg-white border-primary shadow-lg shadow-primary/30' 
                       : 'bg-neutral-600 border-neutral-500'

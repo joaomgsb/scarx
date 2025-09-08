@@ -41,7 +41,7 @@ const BetterMeStats: React.FC = () => {
 								<p className="text-6xl md:text-7xl font-display font-medium text-primary mb-4">
 									{item.title}
 								</p>
-								<p className="text-base md:text-lg text-light-muted">
+								<p className="text-base md:text-lg text-white">
 									{item.description}
 								</p>
 							</div>

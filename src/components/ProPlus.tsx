@@ -357,7 +357,7 @@ const ProPlus: React.FC = () => {
                   rel="noopener noreferrer"
                   className="btn-primary text-sm md:text-lg"
                 >
-                  Iniciar Minha Transformação PRO+
+                  INICIAR MINHA TRANSFORMAÇÃO
                 </a>
               </div>
             </div>

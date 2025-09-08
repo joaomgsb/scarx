@@ -222,7 +222,7 @@ const Faq: React.FC = () => {
                 href="https://wa.me/5541984961012?text=Olá! Tenho algumas dúvidas sobre os planos da ScarX e gostaria de conversar com a equipe."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-primary text-dark font-bold py-4 px-8 rounded-xl text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
+                className="btn-primary"
               >
                 QUERO TER MEU PLANO AGORA!
               </a>

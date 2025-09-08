@@ -160,7 +160,9 @@ const ElitePlan: React.FC = () => {
         className={`absolute inset-0 ${
           plano.id === 'xelite' 
             ? 'bg-gradient-to-br from-primary/30 to-primary/15' 
-            : 'bg-gradient-to-br from-blue-500/20 to-blue-600/10'
+            : plano.id === 'xprivate' 
+              ? 'bg-gradient-to-br from-yellow-400/25 via-yellow-300/10 to-yellow-500/20' 
+              : 'bg-gradient-to-br from-blue-500/20 to-blue-600/10'
         } rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500`}
         animate={{
           opacity: [0.3, 0.6, 0.3],
@@ -173,13 +175,41 @@ const ElitePlan: React.FC = () => {
           ease: "easeInOut"
         }}
       />
+
+      {/* Ribbon exclusiva no XPRIVATE */}
+      {plano.id === 'xprivate' && (
+        <div className="absolute -top-3 -right-3 z-20">
+          <div className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-black text-xs font-extrabold px-3 py-1 rounded-md shadow-lg border border-yellow-300/60">
+            SOB APROVAÇÃO
+          </div>
+        </div>
+      )}
       
       {/* Card Principal */}
       <motion.div 
         className={`relative ${plano.backgroundColorClass} rounded-3xl p-8 shadow-xl hover:scale-[1.02] transition-all duration-300 ease-in-out flex flex-col h-full min-h-[600px] ${
-          plano.id === 'xelite' ? 'border-2 border-primary/40' : 'border border-gray-600'
+          plano.id === 'xelite' ? 'border-2 border-primary/40' : plano.id === 'xprivate' ? 'border-2 border-yellow-400/40 shadow-[0_0_30px_rgba(245,158,11,0.25)] hover:shadow-[0_0_45px_rgba(245,158,11,0.4)]' : 'border border-gray-600'
         }`}
       >
+        {/* Halo/Border animado exclusivo XPRIVATE */}
+        {plano.id === 'xprivate' && (
+          <>
+            <motion.div
+              className="pointer-events-none absolute -inset-[2px] rounded-3xl bg-gradient-to-r from-yellow-400/30 via-yellow-200/10 to-yellow-400/30 opacity-40 blur-sm"
+              animate={{ opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+            {/* Shine sweep */}
+            <div className="pointer-events-none absolute inset-0 rounded-3xl overflow-hidden">
+              <motion.div
+                className="absolute inset-y-0 -left-1/2 w-1/2 bg-gradient-to-r from-transparent via-yellow-200/20 to-transparent"
+                animate={{ x: ['-50%', '150%'] }}
+                transition={{ duration: 2.8, repeat: Infinity, ease: 'linear' }}
+              />
+            </div>
+          </>
+        )}
+
         {/* Header do Card */}
         <div className="text-center mb-8">
           <motion.div 
@@ -188,7 +218,7 @@ const ElitePlan: React.FC = () => {
               plano.id === 'xprivate' ? 'bg-dark' : 'bg-primary'
             } rounded-2xl mb-6 shadow-lg ${
               plano.id === 'xelite' ? 'text-blue-100' : 
-              plano.id === 'xprivate' ? 'text-primary' : 'text-dark'
+              plano.id === 'xprivate' ? 'text-yellow-400' : 'text-dark'
             }`}
             whileHover={{ rotate: 5, scale: 1.1 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -198,12 +228,12 @@ const ElitePlan: React.FC = () => {
           
           {/* Nome do Plano */}
           <motion.h3 
-            className={`text-3xl font-extrabold mb-4 ${plano.textColorClass} group-hover:scale-105 transition-transform duration-300`}
+            className={`text-3xl font-extrabold mb-2 ${plano.textColorClass} group-hover:scale-105 transition-transform duration-300`}
             whileHover={{ scale: 1.05 }}
           >
             {plano.name}
           </motion.h3>
-          
+
           <p className={`text-lg leading-relaxed ${
             plano.id === 'xelite' ? 'text-dark/80' : 
             plano.id === 'xprivate' ? 'text-dark' : 'text-light-gray'
@@ -230,7 +260,7 @@ const ElitePlan: React.FC = () => {
                   {feature.included ? (
                     <CheckCircle className={`w-5 h-5 ${
                       plano.id === 'xelite' ? 'text-green-500' : 
-                      plano.id === 'xprivate' ? 'text-white' : 'text-green-500'
+                      plano.id === 'xprivate' ? 'text-yellow-300' : 'text-green-500'
                     }`} />
                   ) : (
                     <X className="w-5 h-5 text-gray-500" />
@@ -254,12 +284,12 @@ const ElitePlan: React.FC = () => {
             href={`https://wa.me/5541984961012?text=${encodeURIComponent(plano.whatsappText)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className={`w-full ${plano.buttonColorClass} font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg group/cta`}
+            className={`w-full ${plano.id === 'xprivate' ? 'btn btn-gold' : plano.buttonColorClass} font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg group/cta`}
             whileHover={{ y: -2, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             <MessageSquare className="w-4 h-4" />
-            QUERO COMEÇAR AGORA
+            {plano.id === 'xprivate' ? 'SOLICITAR ACESSO AGORA' : 'QUERO COMEÇAR AGORA'}
             <ArrowRight className="w-4 h-4 group-hover/cta:translate-x-1 transition-transform" />
           </motion.a>
         </motion.div>
@@ -331,26 +361,23 @@ const ElitePlan: React.FC = () => {
               variants={itemVariants}
               className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight text-primary"
             >
-              Escolha o nível
+              Planos de Acompanhamento
               <br />
-              de atenção
+              ScarX
             </motion.h2>
             
             <motion.h3 
               variants={itemVariants}
               className="text-2xl md:text-3xl font-bold text-light-muted mb-6"
             >
-              O método é o mesmo — a gestão muda.
+              Mesmo método. Você escolhe o nível de suporte.
             </motion.h3>
             
             <motion.p 
               variants={itemVariants}
               className="text-xl md:text-2xl text-light-gray max-w-4xl mx-auto leading-relaxed"
             >
-              Sob medida em todos os níveis. Diferença está em{' '}
-              <span className="text-primary font-semibold">prioridade</span>,{' '}
-              <span className="text-primary font-semibold">acesso</span> e{' '}
-              <span className="text-primary font-semibold">concierge</span>.
+              Compare prioridade, canais e frequência de ajustes.
             </motion.p>
           </motion.div>
 

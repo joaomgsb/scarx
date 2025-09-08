@@ -49,7 +49,6 @@ const Navbar: React.FC = () => {
       children: [
         { name: 'Por que somos diferentes', to: 'journey', type: 'scroll' },
         { name: 'Como funciona na prática', to: 'hero-video', type: 'scroll' },
-        { name: 'Plano PRO+', to: 'pro-plus', type: 'scroll' },
         { name: 'Planos', to: 'plans', type: 'scroll' },
         { name: 'Descubra seu plano', to: 'discover-plan', type: 'scroll' },
       ],
