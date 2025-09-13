@@ -154,12 +154,12 @@ const ProPlus: React.FC = () => {
                       <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-dark rounded-2xl blur-lg opacity-50" />
                       <img
                         src="images/ana.png"
-                        alt="Ana Fontes - Gerente Executiva PRO+"
+                        alt="Ana Fontes - Gerente de Relacionamento PRO+"
                         className="relative w-48 h-48 md:w-56 md:h-56 rounded-2xl object-cover shadow-2xl border-2 border-primary/40"
                       />
                       <div className="absolute -bottom-3 -right-3 bg-primary py-2 px-3 rounded-lg shadow-lg">
                         <p className="font-bold text-xs md:text-sm !text-black">Ana Fontes</p>
-                        <p className="text-xs !text-black">Gerente Executiva</p>
+                        <p className="text-xs !text-black">Gerente de Relacionamento</p>
                       </div>
                     </div>
                   </div>
@@ -344,7 +344,7 @@ const ProPlus: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
               <div className="relative">
                 <div className="text-primary font-semibold text-base md:text-lg mb-4 md:mb-6 text-center">
-                  Transformação Garantida
+                Começar agora
                 </div>
                 
                 <p className="text-base md:text-xl text-light-muted italic mb-6 md:mb-8 leading-relaxed max-w-3xl mx-auto">

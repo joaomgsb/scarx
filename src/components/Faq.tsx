@@ -109,6 +109,10 @@ const Faq: React.FC = () => {
 
   const faqItems = [
     {
+      question: "O que é a ScarX?",
+      answer: "A ScarX é uma consultoria de transformação corporal que cria protocolos 100% personalizados para cada pessoa. Usamos ciência, tecnologia e acompanhamento humano próximo para desenvolver planos exclusivos de treino e nutrição, ajustados à sua rotina, objetivos e necessidades reais. Nossa metodologia foge das dietas genéricas e entrega uma experiência completa de evolução física e mental, com resultados que podem ser medidos e sentidos no dia a dia."
+    },
+    {
       question: "Nunca fiz consultoria, é para mim?",
         answer: "Sim, absolutamente! A ScarX foi desenhada para todos que buscam resultados reais e duradouros, independentemente do seu nível de experiência. Nossa metodologia é intuitiva para iniciantes e robusta o suficiente para atletas experientes. Com acompanhamento premium e uma equipe dedicada, você terá todo o suporte para iniciar e manter sua jornada de transformação com confiança."
     },
@@ -118,7 +122,7 @@ const Faq: React.FC = () => {
     },
     {
       question: "Como funciona o acompanhamento diário?",
-      answer: "Você terá acesso direto à equipe via WhatsApp, podendo tirar dúvidas, relatar dificuldades ou solicitar ajustes a qualquer momento. No plano PRO+, você conta com suporte 24/7 e atenção prioritária da nossa Gerente Executiva, Ana Fontes."
+      answer: "Você terá acesso direto à equipe via WhatsApp, podendo tirar dúvidas, relatar dificuldades ou solicitar ajustes a qualquer momento. No plano PRO+, você conta com suporte 24/7 e atenção prioritária da nossa Gerente de Relacionamento, Ana Fontes."
     },
     {
       question: "O plano alimentar é muito restritivo? Vou ter que cortar o que gosto?",
@@ -142,7 +146,7 @@ const Faq: React.FC = () => {
     },
     {
               question: "Qual é a diferença entre os planos da ScarX?",
-      answer: "Oferecemos diferentes níveis de serviço para atender diversas necessidades. O plano PRO+ é nossa experiência premium, com atendimento prioritário, acesso exclusivo à Gerente Executiva, suporte 24/7, ajustes imediatos e um nível de personalização sem precedentes."
+      answer: "Oferecemos diferentes níveis de serviço para atender diversas necessidades. O plano PRO+ é nossa experiência premium, com atendimento prioritário, acesso exclusivo à Gerente de Relacionamento, suporte 24/7, ajustes imediatos e um nível de personalização sem precedentes."
     },
     {
       question: "Em quanto tempo terei resultados?",

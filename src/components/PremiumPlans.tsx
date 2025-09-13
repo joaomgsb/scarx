@@ -55,7 +55,7 @@ const PremiumPlans: React.FC = () => {
       featured: false,
       badge: "Premium",
       benefits: [
-        "Gerente executiva dedicada",
+        "Gerente de Relacionamento dedicada",
         "Suporte 24/7 prioritário",
         "Atendimento VIP exclusivo",
         "Todos os benefícios Elite PRO",
