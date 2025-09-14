@@ -17,6 +17,7 @@ import ElitePlan from '../components/ElitePlan';
 import DiscoverPlanCTA from '../components/DiscoverPlanCTA';
 import BetterMeStats from '../components/BetterMeStats';
 import BetterMeTeam from '../components/BetterMeTeam';
+import AboutSection from '../components/AboutSection';
 
 const HomePage: React.FC = () => {
   // Scroll para o topo quando a página carrega
@@ -56,6 +57,10 @@ const HomePage: React.FC = () => {
 
       <div id="betterme-team">
         <BetterMeTeam />
+      </div>
+
+      <div id="about">
+        <AboutSection />
       </div>
       
       <div id="pro-plus">

@@ -9,6 +9,7 @@ import etapa3Animation from '../animations/etapa3.json';
 import etapa4Animation from '../animations/etapa4.json';
 import WhatsAppButton from '../components/WhatsAppButton';
 import { analisarPerfilCompleto } from '../utils/openai';
+import { sendQuizEmail } from '../config/emailjs';
 
 // Interfaces
 interface QuizFormData {
@@ -511,6 +512,16 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       const result = await analisarPerfilCompleto(openaiData);
       setQuizResult(result);
       localStorage.setItem('quizResult', JSON.stringify(result));
+      
+      // Enviar email com os dados do quiz
+      try {
+        await sendQuizEmail(formData, result, discountAmount);
+        console.log('Email enviado com sucesso!');
+      } catch (error) {
+        console.error('Erro ao enviar email:', error);
+        // Não bloquear o fluxo se o email falhar
+      }
+      
       setShowFinalResult(true);
     } catch (error) {
       console.error('Erro ao chamar OpenAI:', error);
@@ -524,6 +535,16 @@ const QuizPage: React.FC<QuizPageProps> = ({ experienceOnly = false }) => {
       };
       setQuizResult(fallbackResult);
       localStorage.setItem('quizResult', JSON.stringify(fallbackResult));
+      
+      // Enviar email com os dados do quiz (fallback)
+      try {
+        await sendQuizEmail(formData, fallbackResult, discountAmount);
+        console.log('Email enviado com sucesso (fallback)!');
+      } catch (error) {
+        console.error('Erro ao enviar email (fallback):', error);
+        // Não bloquear o fluxo se o email falhar
+      }
+      
       setShowFinalResult(true);
     } finally {
       setIsLoading(false);
