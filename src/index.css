@@ -449,3 +449,13 @@
   border-radius: 0.5rem;
   font-size: 0.875rem;
 }
+
+/* Animação para carrossel infinito */
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-420px);
+  }
+  100% {
+    transform: translateX(0); /* Movimento para a DIREITA */
+  }
+}

@@ -136,9 +136,19 @@ const ResultsGallery: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Estado para o segundo carrossel
-  const [secondCarouselTranslate, setSecondCarouselTranslate] = useState(-50);
+  // Ref para o segundo carrossel
   const secondCarouselRef = useRef<HTMLDivElement>(null);
+
+  // Array com as pessoas do segundo carrossel
+  const carouselPeople = [
+    { name: "Carol Gregory", image: "images/carroussel/Carol Gregory.jpg" },
+    { name: "Daniel Scott", image: "images/carroussel/Daniel Scott.jpg" },
+    { name: "Peter Jordan", image: "images/carroussel/Peter Jordan.jpg" },
+    { name: "Nanda Guardian", image: "images/carroussel/Nanda Guardian.jpg" },
+    { name: "Luciana Labanca", image: "images/carroussel/Luciana Labanca Cirurgia plastica.jpg" },
+    { name: "Karoline Copetti", image: "images/carroussel/Karoline Copetti.jpg" },
+    { name: "Nicolas Rigoli", image: "images/carroussel/Nicolas Rigoli.jpg" }
+  ];
 
   // Array completo com todas as transformações disponíveis
   const transformations = [
@@ -217,29 +227,7 @@ const ResultsGallery: React.FC = () => {
     return () => clearInterval(animationId);
   }, [inView, transformations.length]);
 
-  // Animação do segundo carrossel (direção oposta)
-  useEffect(() => {
-    if (!inView) return;
-
-    const speed = 0.02; // porcentagem por frame (direção oposta)
-
-    const animate = () => {
-      setSecondCarouselTranslate(prev => {
-        const newTranslate = prev + speed; // Movimento positivo (esquerda para direita)
-        
-        // Quando chegamos no final (0%), resetamos para -50%
-        if (newTranslate >= 0) {
-          return -50; // Volta para -50% para continuar o loop
-        }
-        
-        return newTranslate;
-      });
-    };
-
-    const animationId = setInterval(animate, 16); // ~60fps
-
-    return () => clearInterval(animationId);
-  }, [inView]);
+  // CSS animation handles the infinite scroll
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -352,39 +340,41 @@ const ResultsGallery: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Segundo Carrossel Infinito - Direção Oposta */}
+          {/* Segundo Carrossel Infinito - Pessoas Transformadas */}
           <motion.div variants={itemVariants} className="relative overflow-hidden mt-8">
             {/* Blur overlay esquerdo */}
-            <div className="absolute left-0 top-0 bottom-0 w-4 sm:w-6 md:w-8 bg-gradient-to-r from-dark via-dark/60 to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 bg-gradient-to-r from-dark via-dark/80 to-transparent z-20 pointer-events-none" />
             
             {/* Blur overlay direito */}
-            <div className="absolute right-0 top-0 bottom-0 w-4 sm:w-6 md:w-8 bg-gradient-to-l from-dark via-dark/60 to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-12 md:w-16 bg-gradient-to-l from-dark via-dark/80 to-transparent z-20 pointer-events-none" />
             
             <div 
               ref={secondCarouselRef}
-              className="flex"
+              className="flex animate-scroll-right"
               style={{
-                width: '200%',
-                transform: `translateX(${secondCarouselTranslate}%)`,
+                animation: 'scroll-right 8s linear infinite',
                 willChange: 'transform'
               }}
             >
-              {/* Primeira instância da imagem */}
-              <div className="flex-shrink-0 w-1/2">
-                <img 
-                  src="images/efeitos/carroussel.jpg" 
-                  alt="Transformações contínuas"
-                  className="w-full h-12 sm:h-16 md:h-20 object-cover object-center"
-                />
-              </div>
-              {/* Segunda instância da imagem para efeito infinito */}
-              <div className="flex-shrink-0 w-1/2">
-                <img 
-                  src="images/efeitos/carroussel.jpg" 
-                  alt="Transformações contínuas"
-                  className="w-full h-12 sm:h-16 md:h-20 object-cover object-center"
-                />
-              </div>
+              {/* Duplicar as sequências para loop infinito perfeito */}
+              {[...Array(3)].map((_, sequenceIndex) => 
+                carouselPeople.map((person, index) => (
+                  <div key={`seq-${sequenceIndex}-${index}`} className="relative flex-shrink-0 group">
+                    <img 
+                      src={person.image}
+                      alt={`Transformação de ${person.name}`}
+                      className="h-16 sm:h-20 md:h-24 lg:h-28 w-16 sm:w-20 md:w-24 lg:w-28 object-cover object-center transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                      style={{ marginRight: '-4px' }} // Imagens bem coladinhas - SEM ESPAÇOS
+                    />
+                    {/* Nome sempre visível na parte inferior */}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-1 sm:p-2">
+                      <span className="text-white text-xs sm:text-sm font-bold text-center block leading-tight drop-shadow-lg">
+                        {person.name.split(' ')[0]}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </motion.div>
 
