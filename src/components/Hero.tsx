@@ -151,18 +151,16 @@ const Hero: React.FC = () => {
             
             {/* CTAs */}
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 mb-6">
-              {/* Botão bonito: Ver Planos */}
-              <Link
-                to="plans"
-                spy={true}
-                smooth={true}
-                offset={-100}
-                duration={500}
+              {/* Botão bonito: QUERO APLICAR PARA SCARX */}
+              <a
+                href="https://scarx.typeform.com/to/rRV74pHd"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-primary w-full sm:w-auto cursor-pointer"
               >
-                Ver Planos
+                QUERO APLICAR PARA SCARX
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </a>
 
               {/* Botão simples: Faça o Quiz personalizado */}
               <RouterLink

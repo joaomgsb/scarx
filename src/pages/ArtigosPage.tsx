@@ -401,13 +401,13 @@ const ArtigosPage: React.FC = () => {
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="https://wa.me/5541984961012?text=Olá! Li o artigo sobre transformação e quero saber mais sobre os planos da ScarX."
+                    href="https://scarx.typeform.com/to/rRV74pHd"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-primary to-primary-dark text-black font-bold py-4 px-8 rounded-xl text-lg flex items-center justify-center gap-3 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
                   >
                     <MessageSquare className="w-6 h-6" />
-                    Quero Meu Plano Personalizado
+                    QUERO APLICAR PARA SCARX
                   </a>
                   
                   <Link
@@ -559,13 +559,13 @@ const ArtigosPage: React.FC = () => {
                 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="https://wa.me/5541984961012?text=Olá! Li os artigos da ScarX e quero saber mais sobre como ter um plano personalizado."
+                    href="https://scarx.typeform.com/to/rRV74pHd"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-gradient-to-r from-primary to-primary-dark text-black font-bold py-4 px-8 rounded-xl text-lg flex items-center justify-center gap-3 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
                   >
                     <MessageSquare className="w-6 h-6" />
-                    Falar com Especialista
+                    QUERO APLICAR PARA SCARX
                   </a>
                   
                   <Link

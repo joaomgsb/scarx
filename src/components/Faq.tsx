@@ -223,12 +223,12 @@ const Faq: React.FC = () => {
               </p>
               
               <a
-                href="https://wa.me/5541984961012?text=Olá! Tenho algumas dúvidas sobre os planos da ScarX e gostaria de conversar com a equipe."
+                href="https://scarx.typeform.com/to/rRV74pHd"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
               >
-                QUERO TER MEU PLANO AGORA!
+                QUERO APLICAR PARA SCARX
               </a>
             </div>
           </motion.div>

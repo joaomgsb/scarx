@@ -352,12 +352,12 @@ const ProPlus: React.FC = () => {
                 </p>
                 
                 <a
-                  href="https://wa.me/5541984961012?text=Olá! Quero contratar o Plano PRO+ - Experiência Premium da ScarX. Estou interessado na experiência exclusiva com Ana Fontes e todos os benefícios premium."
+                  href="https://scarx.typeform.com/to/rRV74pHd"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary text-sm md:text-lg"
                 >
-                  INICIAR MINHA TRANSFORMAÇÃO
+                  QUERO APLICAR PARA SCARX
                 </a>
               </div>
             </div>

@@ -150,16 +150,16 @@ const Contact: React.FC = () => {
               {/* Footer do Card - sempre no final */}
               <div className="space-y-4 mt-6">
                 <a
-                  href="https://wa.me/5541984961012?text=Olá! Gostaria de iniciar minha Consulta Estratégica com a ScarX para discutir meus objetivos de transformação."
+                  href="https://scarx.typeform.com/to/rRV74pHd"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative inline-flex items-center gap-2 md:gap-3 bg-gradient-to-r from-primary via-primary-light to-primary text-black font-bold py-4 px-4 md:px-8 rounded-2xl text-sm md:text-lg shadow-2xl hover:shadow-primary/50 transition-all duration-300 transform hover:scale-105 w-full justify-center"
-                  aria-label="Iniciar consulta estratégica via WhatsApp"
+                  aria-label="Aplicar para ScarX"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-primary-light to-primary rounded-2xl blur opacity-75 group-hover:opacity-100 transition-opacity" />
                   <div className="relative flex items-center gap-2 md:gap-3">
                     <MessageSquare className="w-4 md:w-6 h-4 md:h-6 flex-shrink-0" />
-                    <span className="text-sm md:text-lg whitespace-nowrap">Iniciar Consulta Estratégica</span>
+                    <span className="text-sm md:text-lg whitespace-nowrap">QUERO APLICAR PARA SCARX</span>
                     <Zap className="w-4 md:w-6 h-4 md:h-6 group-hover:rotate-12 transition-transform flex-shrink-0" />
                   </div>
                 </a>

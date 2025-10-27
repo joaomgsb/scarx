@@ -149,7 +149,7 @@ const PremiumPlans: React.FC = () => {
                   {/* CTA */}
                   <div className="mt-auto">
                     <a
-                      href={`https://wa.me/5541984961012?text=Olá! Quero saber mais sobre o plano ${plan.name} da ScarX.`}
+                      href="https://scarx.typeform.com/to/rRV74pHd"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`w-full flex items-center justify-center gap-3 py-4 px-6 rounded-xl font-semibold transition-all duration-300 ${
@@ -159,7 +159,7 @@ const PremiumPlans: React.FC = () => {
                       }`}
                     >
                       <MessageSquare className="w-5 h-5" />
-                      Escolher {plan.name}
+                      QUERO APLICAR PARA SCARX
                       <ArrowRight className="w-5 h-5" />
                     </a>
                   </div>

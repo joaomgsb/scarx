@@ -281,7 +281,7 @@ const ElitePlan: React.FC = () => {
         {/* CTA Button */}
         <motion.div className="mt-auto mb-4">
           <motion.a
-            href={`https://wa.me/5541984961012?text=${encodeURIComponent(plano.whatsappText)}`}
+            href="https://scarx.typeform.com/to/rRV74pHd"
             target="_blank"
             rel="noopener noreferrer"
             className={`w-full ${plano.id === 'xprivate' ? 'btn btn-gold' : plano.buttonColorClass} font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-300 shadow-lg group/cta`}
@@ -289,7 +289,7 @@ const ElitePlan: React.FC = () => {
             whileTap={{ scale: 0.98 }}
           >
             <MessageSquare className="w-4 h-4" />
-            {plano.id === 'xprivate' ? 'SOLICITAR ACESSO AGORA' : 'QUERO COMEÇAR AGORA'}
+            QUERO APLICAR PARA SCARX
             <ArrowRight className="w-4 h-4 group-hover/cta:translate-x-1 transition-transform" />
           </motion.a>
         </motion.div>

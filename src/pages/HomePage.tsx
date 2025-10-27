@@ -13,7 +13,6 @@ import WhatsAppButton from '../components/WhatsAppButton';
 
 import AppShowcase from '../components/AppShowcase';
 import OurClients from '../components/OurClients';
-import ElitePlan from '../components/ElitePlan';
 import DiscoverPlanCTA from '../components/DiscoverPlanCTA';
 import BetterMeStats from '../components/BetterMeStats';
 import BetterMeTeam from '../components/BetterMeTeam';
@@ -65,10 +64,6 @@ const HomePage: React.FC = () => {
       
       <div id="pro-plus">
         <ProPlus />
-      </div>
-      
-      <div id="plans">
-        <ElitePlan />
       </div>
       
       <div id="discover-plan">

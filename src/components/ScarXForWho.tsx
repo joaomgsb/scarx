@@ -185,7 +185,7 @@ const ScarXForWho: React.FC = () => {
               {/* Foto do João Scar */}
               <div className="relative z-10 ml-0 lg:ml-8">
                 <img
-                  src="/images/joaoscar.png"
+                  src="/images/scarterno.jpeg"
                   alt="João Scar - Especialista em Transformação Corporal"
                   className="w-full max-w-md h-auto object-cover rounded-lg shadow-2xl"
                 />

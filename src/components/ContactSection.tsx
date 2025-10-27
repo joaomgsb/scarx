@@ -139,13 +139,13 @@ const ContactSection: React.FC = () => {
                 </p>
 
                 <a
-                  href="https://wa.me/5541984961012?text=Olá! Quero começar minha transformação com a ScarX. Gostaria de conhecer os planos disponíveis."
+                  href="https://scarx.typeform.com/to/rRV74pHd"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-primary text-dark font-bold py-4 px-6 rounded-xl text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
                 >
                   <MessageSquare className="w-5 h-5" />
-                  Falar com Especialista
+                  QUERO APLICAR PARA SCARX
                   <ArrowRight className="w-5 h-5" />
                 </a>
               </div>

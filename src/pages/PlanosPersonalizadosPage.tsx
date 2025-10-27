@@ -439,7 +439,7 @@ const PlanosPersonalizadosPage: React.FC = () => {
 
                 <div className="mt-auto">
                   <a
-                  href={`https://wa.me/5541984961012?text=Olá! Quero contratar o plano ${plano.nome} da ScarX. Acabei de ver meu resultado do IMC e gostaria de iniciar minha transformação.`}
+                  href="https://scarx.typeform.com/to/rRV74pHd"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
@@ -451,7 +451,7 @@ const PlanosPersonalizadosPage: React.FC = () => {
                   }`}
                 >
                   <MessageSquare className="w-5 h-5" />
-                  Escolher {plano.nome}
+                  QUERO APLICAR PARA SCARX
                   </a>
                 </div>
               </motion.div>
@@ -478,13 +478,13 @@ const PlanosPersonalizadosPage: React.FC = () => {
             </motion.p>
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="https://wa.me/5541984961012?text=Olá! Quero saber mais sobre os planos da ScarX. Vi meu resultado do IMC e estou interessado em começar minha transformação."
+                href="https://scarx.typeform.com/to/rRV74pHd"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary text-lg flex items-center justify-center gap-2"
               >
                 <MessageSquare className="w-5 h-5" />
-                Falar com Especialista
+                QUERO APLICAR PARA SCARX
               </a>
               <Link
                 to="/"
