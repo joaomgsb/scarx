@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
   Zap, 
@@ -114,13 +113,15 @@ const DiscoverPlanCTA: React.FC = () => {
                     </div>
                   </div>
 
-                  <Link
-                    to="/quiz"
+                  <a
+                    href="https://scarx.typeform.com/to/rRV74pHd"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn-primary text-lg"
                   >
                     <span>Descobrir meu plano</span>
                     <ArrowRight className="w-5 h-5" />
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

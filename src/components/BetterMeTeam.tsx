@@ -19,7 +19,7 @@ const slides: TeamSlide[] = [
 		id: 'joao',
 		name: 'João Scar',
 		role: 'Fundador & Metodologista',
-		avatar: 'images/joaoscar.png',
+		avatar: 'images/scarterno2.jpeg',
 		quote:
 			'Estamos aqui para transformar hábitos em resultados consistentes, com método e evolução contínua.',
 		chat: {
