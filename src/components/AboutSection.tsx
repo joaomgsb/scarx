@@ -172,7 +172,7 @@ const AboutSection: React.FC = () => {
                     <div className="order-1 lg:order-1">
                       <div className="lg:card lg:glass-effect lg:rounded-3xl lg:overflow-hidden">
                         <img
-                          src="/images/joaoscar.png"
+                          src="/images/scarterno2.jpeg"
                           alt="João Scar - Fundador da ScarX"
                           className="w-full h-auto object-cover rounded-3xl lg:rounded-none"
                         />

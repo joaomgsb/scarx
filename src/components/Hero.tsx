@@ -1,6 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-scroll';
-import { Link as RouterLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { ArrowRight, Play } from 'lucide-react';
@@ -161,14 +159,6 @@ const Hero: React.FC = () => {
                 QUERO APLICAR PARA SCARX
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
-
-              {/* Botão simples: Faça o Quiz personalizado */}
-              <RouterLink
-                to="/quiz"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-white/30 text-white hover:bg-white/10 font-medium py-3 sm:py-4 px-6 sm:px-8 rounded-xl text-base sm:text-lg transition-all duration-300"
-              >
-                Descubra seu plano ideal
-              </RouterLink>
             </motion.div>
             
             {/* Indicadores de qualidade - mais discretos */}
