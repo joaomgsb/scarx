@@ -80,7 +80,7 @@ const AboutFounder: React.FC = () => {
                 />
                 <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-primary to-primary-dark text-black py-3 px-6 rounded-2xl shadow-2xl border border-primary/30 group-hover:scale-105 transition-all duration-300">
                   <p className="font-bold text-black">João Scar</p>
-                  <p className="text-sm text-black">Fundador ScarFit</p>
+                  <p className="text-sm text-black">Fundador ScarX</p>
                 </div>
               </div>
             </motion.div>

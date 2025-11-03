@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://scarfit.com/sitemap.xml
+Sitemap: https://scarx.com.br/sitemap.xml
 
 # Disallow admin areas (if any)
 Disallow: /admin/
